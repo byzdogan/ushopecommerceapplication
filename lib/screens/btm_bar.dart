@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
-//import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ushopecommerceapplication/screens/cart.dart';
 import 'package:ushopecommerceapplication/screens/categories.dart';
 import 'package:ushopecommerceapplication/screens/home_screen.dart';
@@ -20,7 +19,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int _selectedIndex = 0; //HomeScreen main page olduğu için
   final List _pages = [
     const HomeScreen(),
-    const CategoriesScreen(),
+    CategoriesScreen(),
     const CartScreen(),
     const UserScreen(),
   ];

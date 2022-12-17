@@ -110,7 +110,9 @@ class _UserScreenState extends State<UserScreen> {
                     _listTiles(
                       title: "Logout",
                       icon: IconlyLight.logout,
-                      onPressed: (){},
+                      onPressed: (){
+                        _showLogOutDialog();
+                      },
                       color: color,),
                   ],
                 ),
@@ -119,6 +121,43 @@ class _UserScreenState extends State<UserScreen> {
         ),
     );
   }
+  Future<void> _showLogOutDialog() async{
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Row(children: [
+              Image.asset("assets/images/warning-sign.png",
+                height: 20,
+                width: 20,
+                fit: BoxFit.fill,),
+              const SizedBox(width: 10),
+              const Text("Sign out")
+            ]),
+            content: const Text("Do you wannt signout?"),
+            actions: [
+              TextButton(
+                onPressed: (){
+                if(Navigator.canPop(context)){
+                  Navigator.pop(context);
+                }
+              }, 
+                child: TextWidget(
+                color:  Colors.cyan,
+                text: "Cancel",
+                textSize: 18,
+              ),),
+              TextButton(onPressed: (){}, child: TextWidget(
+                color:  Colors.deepOrange,
+                text: "OK",
+                textSize: 18,
+              ),),
+            ]
+          );
+        });
+  }
+
+
   Future<void> _showAdressDialog() async{
     await showDialog(
         context: context,
@@ -135,7 +174,11 @@ class _UserScreenState extends State<UserScreen> {
               InputDecoration(hintText: "Please, enter your adress here."),
             ),
             actions: [
-              TextButton(onPressed: () {},
+              TextButton(onPressed: () {
+                if(Navigator.canPop(context)){
+                  Navigator.pop(context);
+                }
+              },
                   child: const Text("Update"))
             ],
           );
