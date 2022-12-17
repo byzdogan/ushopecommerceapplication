@@ -134,7 +134,7 @@ class _UserScreenState extends State<UserScreen> {
               const SizedBox(width: 10),
               const Text("Sign out")
             ]),
-            content: const Text("Do you wannt signout?"),
+            content: const Text("Do you want to signout?"),
             actions: [
               TextButton(
                 onPressed: (){
