@@ -148,7 +148,7 @@ class _UserScreenState extends State<UserScreen> {
                 textSize: 18,
               ),),
               TextButton(onPressed: (){}, child: TextWidget(
-                color:  Colors.deepOrange,
+                color:  Colors.redAccent,
                 text: "OK",
                 textSize: 18,
               ),),
