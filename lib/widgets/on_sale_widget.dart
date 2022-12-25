@@ -1,6 +1,8 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
+import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import 'package:ushopecommerceapplication/widgets/price_widget.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
@@ -34,11 +36,11 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                      "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+                    FancyShimmerImage(
+                      imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
                       height: size.width*0.22,
-                      //width: size.width*0.22,
-                      fit: BoxFit.fill,
+                      width: size.width*0.22,
+                      boxFit: BoxFit.fill,
                     ),
                     Column(children: [
                       //TextWidget(text: '', color: color, textSize: 22, isTitle: true,),
@@ -54,16 +56,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                             color: color,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            print("add to favorites is pressed");
-                          },
-                          child: Icon(
-                            IconlyLight.heart,
-                            size: 22,
-                            color: color,
-                          ),
-                        ),
+                        HeartBTN(),
                         //const PriceWidget(),
                       ],
                       ),

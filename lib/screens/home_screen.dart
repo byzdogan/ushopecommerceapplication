@@ -4,6 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
+import 'package:ushopecommerceapplication/widgets/feed_items.dart';
 import 'package:ushopecommerceapplication/widgets/on_sale_widget.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
@@ -26,85 +27,123 @@ class _HomeScreenState extends State<HomeScreen> {
     final Utils utils = Utils(context);
     final themeState = utils.getTheme;
     final size = utils.getScreenSize;
+    final Color color = Utils(context).color;
 
     return Scaffold(
-      body: Column(
-        children: [SizedBox(
-          height: size.height * 0.33,
-          child: Swiper(
-            itemBuilder: (BuildContext context,int index){
-              return Image.asset(
-                _offerImages[index],
-                fit: BoxFit.fill,);
+      body: SingleChildScrollView(
+        child: Column(
+          children: [SizedBox(
+            height: size.height * 0.33,
+            child: Swiper(
+              itemBuilder: (BuildContext context,int index){
+                return Image.asset(
+                  _offerImages[index],
+                  fit: BoxFit.fill,);
+              },
+              autoplay: true,
+              itemCount: _offerImages.length,
+              pagination: const SwiperPagination(
+                alignment: Alignment.bottomCenter,
+                builder: DotSwiperPaginationBuilder(
+                  color: Colors.white,
+                  activeColor: Colors.cyan,),
+              ),
+//control: const SwiperControl(color: Colors.blue), //resim kenarlarında ok
+            ),
+          ),
+            const SizedBox(
+              height: 4, //6
+            ),
+            TextButton(onPressed: () {
+              print("View All button iis pressed");
             },
-            autoplay: true,
-            itemCount: _offerImages.length,
-            pagination: const SwiperPagination(
-              alignment: Alignment.bottomCenter,
-              builder: DotSwiperPaginationBuilder(
-                color: Colors.white,
-                activeColor: Colors.cyan,),
-            ),
-            //control: const SwiperControl(color: Colors.blue), //resim kenarlarında ok
-          ),
-        ),
-          const SizedBox(
-            height: 4, //6
-          ),
-          TextButton(onPressed: () {
-            print("View All button iis pressed");
-          },
-            child: TextWidget(
-              text: "View All",
-              textSize: 20,
-              maxLines: 1,
-              color: Colors.cyan,
-            ),
-          ),
-          const SizedBox(
-            height: 4, //6
-          ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 5,
+              child: TextWidget(
+                text: "View All",
+                textSize: 20,
+                maxLines: 1,
+                color: Colors.cyan,
               ),
-              RotatedBox(
-                quarterTurns: -1,
-                child: Row(
-                  children: [
-                    TextWidget(
-                      text: "On Sale".toUpperCase(),
-                      color: Colors.redAccent,
-                      textSize: 22,
-                      isTitle: true,),
-                    const Icon(
-                      IconlyLight.discount,
-                      color: Colors.redAccent,
-                    ),
-                  ],
+            ),
+            const SizedBox(
+              height: 4, //6
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 5,
                 ),
-              ),
-              const SizedBox(
-                width: 1,
-              ),
-              Flexible(
-                child: SizedBox(
-                  height: size.height*0.21, //0.24
-                  child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, index) {
-                      return const OnSaleWidget();
-                    },
+                RotatedBox(
+                  quarterTurns: -1,
+                  child: Row(
+                    children: [
+                      TextWidget(
+                        text: "On Sale".toUpperCase(),
+                        color: Colors.redAccent,
+                        textSize: 22,
+                        isTitle: true,),
+                      const Icon(
+                        IconlyLight.discount,
+                        color: Colors.redAccent,
+                      ),
+                    ],
                   ),
                 ),
+                const SizedBox(
+                  width: 1,
+                ),
+                Flexible(
+                  child: SizedBox(
+                    height: size.height*0.21, //0.24
+                    child: ListView.builder(
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index) {
+                        return const OnSaleWidget();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 1,), //10
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextWidget(
+                    text: "Our Products",
+                    color: color,
+                    textSize: 22,
+                    isTitle: true,),
+//const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      print("Browse All button is pressed");
+                    },
+                    child: TextWidget(
+                      text: "Browse all",
+                      textSize: 20,
+                      maxLines: 1,
+                      color: Colors.cyan,
+                      isTitle: true,
+                    ),
+                  ),
+                ],
               ),
-
-            ],
-          ),
-
-        ],
+            ),
+            GridView.count(
+                shrinkWrap: true, //
+                physics: const NeverScrollableScrollPhysics(), //not be scrollable anymore
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                childAspectRatio: size.width / (size.height * 0.65), //0.59
+                children: List.generate(4, (index) {
+                  return FeedsWidget();
+                }),
+            ),
+          ],
+        ),
       ),
     );
   }
