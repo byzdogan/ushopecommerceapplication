@@ -2,7 +2,10 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
+import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/feed_items.dart';
 import 'package:ushopecommerceapplication/widgets/on_sale_widget.dart';
@@ -33,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [SizedBox(
+
             height: size.height * 0.33,
             child: Swiper(
               itemBuilder: (BuildContext context,int index){
@@ -52,11 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
             const SizedBox(
+
               height: 4, //6
             ),
-            TextButton(onPressed: () {
-              print("View All button iis pressed");
-            },
+            TextButton(
+              onPressed: () {
+                GlobalMethods.navigateTo(
+                    ctx: context, routeName: OnSaleScreen.routeName);
+              },
               child: TextWidget(
                 text: "View All",
                 textSize: 20,
@@ -65,14 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
+
               height: 4, //6
             ),
             Row(
               children: [
                 const SizedBox(
+
                   width: 5,
                 ),
                 RotatedBox(
+
                   quarterTurns: -1,
                   child: Row(
                     children: [
@@ -89,11 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
+
                   width: 1,
                 ),
                 Flexible(
                   child: SizedBox(
-                    height: size.height*0.21, //0.24
+
+                    height: size.height*0.21, //0.24 //0,21
                     child: ListView.builder(
                       itemCount: 10,
                       scrollDirection: Axis.horizontal,
@@ -116,10 +128,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: color,
                     textSize: 22,
                     isTitle: true,),
-//const Spacer(),
+                  //const Spacer(),
                   TextButton(
                     onPressed: () {
-                      print("Browse All button is pressed");
+                      GlobalMethods.navigateTo(ctx: context, routeName: FeedsScreen.routeName);
                     },
                     child: TextWidget(
                       text: "Browse all",
@@ -133,14 +145,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             GridView.count(
-                shrinkWrap: true, //
-                physics: const NeverScrollableScrollPhysics(), //not be scrollable anymore
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                childAspectRatio: size.width / (size.height * 0.65), //0.59
-                children: List.generate(4, (index) {
-                  return FeedsWidget();
-                }),
+              shrinkWrap: true, //
+              physics: const NeverScrollableScrollPhysics(), //not be scrollable anymore
+              crossAxisCount: 2,
+              padding: EdgeInsets.zero,
+              crossAxisSpacing: 10,
+              childAspectRatio: size.width / (size.height * 0.65), //0.59 //0.65
+              children: List.generate(4, (index) {
+                return const FeedsWidget();
+              }),
             ),
           ],
         ),

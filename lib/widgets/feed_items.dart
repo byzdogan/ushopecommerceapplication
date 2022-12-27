@@ -35,113 +35,139 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     Size size = Utils(context).getScreenSize;
     final theme = Utils(context).getTheme;
     return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(12),
+        color: Theme.of(context).cardColor,
+        child: InkWell(
+          onTap: () {},
           borderRadius: BorderRadius.circular(12),
-          color: Theme.of(context).cardColor,
-          child: InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(12),
-            child: Column(
-              children:[
-                FancyShimmerImage(
-                  imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
-                  height: size.width*0.21,
-                  width: size.width*0.2,
-                  boxFit: BoxFit.fill,
+          child: Column(
+            children:[
+              FancyShimmerImage(
+                imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+                height: size.width*0.21,
+                width: size.width*0.2,
+                boxFit: BoxFit.fill,
+              ),
+              const SizedBox(height: 5,),
+              TextWidget(
+                text: "Title",
+                color: color,
+                textSize: 20,
+                isTitle: true,
+              ),
+              const SizedBox(height: 5,),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  //vertical: 10
                 ),
-                const SizedBox(height: 5,),
-                TextWidget(
-                  text: "Title",
-                  color: color,
-                  textSize: 20,
-                  isTitle: true,
-                ),
-                const SizedBox(height: 5,),
-                Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        //vertical: 10
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 4,
+                      child: PriceWidget(
+                        salePrice: 200,
+                        price: 250,
+                        textPrice: _quantityTextController.text,
+                        isOnSale: true,
                       ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const PriceWidget(),
-                      const HeartBTN(),
-                    ],
-                  ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Row(
-                            children: [
-                              FittedBox(
-                                child: TextWidget(
-                                  text: "Quantity:",
-                                  color: color,
-                                  textSize: 20,
-                                  isTitle: true,
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  controller: _quantityTextController,
-                                  key: const ValueKey("10"),
-                                  style: TextStyle(color: color, fontSize: 18,),
-                                  keyboardType: TextInputType.number,
-                                  maxLines: 1,
-                                  decoration: const InputDecoration(
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(),
-                                    ),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  //cursorColor: Colors.green,
-                                  enabled: true,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
                     ),
+                    const HeartBTN(),
+                  ],
                 ),
-                const Spacer(),
-                SizedBox(
-                  width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: TextWidget(
-                        text: "Add to cart",
-                        maxLines: 1,
-                        color: color,
-                        textSize: 20,
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Theme.of(context).cardColor), //text button background color için
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(12.0),
-                                bottomRight: Radius.circular(12.0),
-                              ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Row(
+                        children: [
+                          FittedBox(
+                            child: TextWidget(
+                              text: "Quantity:",
+                              color: color,
+                              textSize: 20,
+                              isTitle: true,
                             ),
-                          )),
-                    )
+                          ),
+                          Flexible(
+                            flex: 2,
+                            child: TextFormField(
+                              controller: _quantityTextController,
+                              key: const ValueKey("10"),
+                              style: TextStyle(color: color, fontSize: 18,),
+                              keyboardType: TextInputType.number,
+                              //validator: (value) {
+                              //if (value!.isEmpty) {
+                              //return 'Quantity is missed';
+                              //}
+                              //return null;
+                              //},
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(),
+                                ),
+                              ),
+                              textAlign: TextAlign.center,
+                              //cursorColor: Colors.green,
+                              enabled: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  if (value.isEmpty) {
+                                    _quantityTextController.text = '1';
+                                  } else {
+                                    // total = usedPrice *
+                                    //     int.parse(_quantityTextController.text);
+                                  }
+                                  onSaved: (value) {};
+                                });
+                              },
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+              const Spacer(),
+              SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: TextWidget(
+                      text: "Add to cart",
+                      maxLines: 1,
+                      color: color,
+                      textSize: 20,
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all(Theme.of(context).cardColor), //text button background color için
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(12.0),
+                              bottomRight: Radius.circular(12.0),
+                            ),
+                          ),
+                        )),
+                  )
+              ),
 
-              ],),
-          ),
+            ],),
         ),
+      ),
     );
   }
 }
