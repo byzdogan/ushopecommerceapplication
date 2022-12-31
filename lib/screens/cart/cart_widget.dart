@@ -2,6 +2,8 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
@@ -35,7 +37,11 @@ class _CartWidgetState extends State<CartWidget> {
     final Color color = Utils(context).color;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalMethods.navigateTo(
+            ctx: context,
+            routeName: ProductDetails.routeName);
+      },
       child: Row(
         children: [
           Expanded(//to make the container fit the whole width
@@ -77,7 +83,7 @@ class _CartWidgetState extends State<CartWidget> {
                               _quantityController(
                                   fct: () {},
                                   icon: CupertinoIcons.minus,
-                                  color: Colors.redAccent.withOpacity(0.3)),
+                                  color: Colors.redAccent),
                               Flexible(
                                 flex: 1,
                                 child: TextField(
@@ -106,7 +112,7 @@ class _CartWidgetState extends State<CartWidget> {
                               _quantityController(
                                 fct: () {},
                                 icon: CupertinoIcons.plus,
-                                color: Colors.cyan.withOpacity(0.3),
+                                color: Colors.cyan,
                               ),
                             ],
                           ),
@@ -144,6 +150,7 @@ class _CartWidgetState extends State<CartWidget> {
                         ],
                       ),
                     ),
+                    //const SizedBox(width: 5,),
                   ],
                 ),
               ),
@@ -175,6 +182,7 @@ class _CartWidgetState extends State<CartWidget> {
               child: Icon(
                 icon,
                 color: Colors.black,
+                size: 20,
                 //color: Colors.white,
               ),
             ),

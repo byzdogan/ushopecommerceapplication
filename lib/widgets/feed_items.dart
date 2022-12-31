@@ -1,6 +1,8 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import 'package:ushopecommerceapplication/widgets/price_widget.dart';
@@ -40,7 +42,11 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         borderRadius: BorderRadius.circular(12),
         color: Theme.of(context).cardColor,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            GlobalMethods.navigateTo(
+                ctx: context,
+                routeName: ProductDetails.routeName);
+          },
           borderRadius: BorderRadius.circular(12),
           child: Column(
             children:[
@@ -50,37 +56,35 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 width: size.width*0.2,
                 boxFit: BoxFit.fill,
               ),
-              const SizedBox(height: 5,),
-              TextWidget(
-                text: "Title",
-                color: color,
-                textSize: 20,
-                isTitle: true,
-              ),
-              const SizedBox(height: 5,),
+              const SizedBox(height: 6,),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                  //vertical: 10
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Flexible(
-                      flex: 4,
-                      child: PriceWidget(
-                        salePrice: 200,
-                        price: 250,
-                        textPrice: _quantityTextController.text,
-                        isOnSale: true,
-                      ),
-                    ),
+                    TextWidget(
+                    text: "Title",
+                    color: color,
+                    textSize: 20,
+                    isTitle: true,
+                  ),
+                    const SizedBox(width: 30,),
                     const HeartBTN(),
                   ],
                 ),
               ),
+              const SizedBox(height: 6,),
+              Flexible(
+                flex: 4,
+                child: PriceWidget(
+                  salePrice: 200,
+                  price: 250,
+                  textPrice: _quantityTextController.text,
+                  isOnSale: true,
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

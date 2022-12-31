@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/const/theme_data.dart';
 import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
+import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
 import 'package:ushopecommerceapplication/screens/home_screen.dart';
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
               routes: {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),
+            ProductDetails.routeName: (ctx) => const ProductDetails(),
               }
           );
       }
