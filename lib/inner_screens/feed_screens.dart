@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:ushopecommerceapplication/widgets/back_widget.dart';
 import '../services/utils.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
@@ -28,16 +29,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
     Size size = Utils(context).getScreenSize;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            IconlyLight.arrow_left_2,
-            color: color,
-          ),
-        ),
+        leading: BackWidget(),
         elevation: 1,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:iconly/iconly.dart';
+import 'package:ushopecommerceapplication/widgets/back_widget.dart';
 import 'package:ushopecommerceapplication/widgets/on_sale_widget.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
@@ -16,16 +17,7 @@ class OnSaleScreen extends StatelessWidget {
     Size size = Utils(context).getScreenSize;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            IconlyLight.arrow_left,
-            color: color,
-          ),
-        ),
+        leading: BackWidget(),
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: TextWidget(

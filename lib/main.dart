@@ -8,6 +8,9 @@ import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
 import 'package:ushopecommerceapplication/screens/home_screen.dart';
+import 'package:ushopecommerceapplication/screens/orders/orders_screen.dart';
+import 'package:ushopecommerceapplication/screens/viewed_recently/viewed_recently.dart';
+import 'package:ushopecommerceapplication/screens/wishlist/wishlist_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +59,9 @@ class _MyAppState extends State<MyApp> {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),
             ProductDetails.routeName: (ctx) => const ProductDetails(),
+            WishlistScreen.routeName: (ctx) => const WishlistScreen(),
+            OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+            ViewedRecentlyScreen.routeName: (ctx) => const ViewedRecentlyScreen(),
               }
           );
       }

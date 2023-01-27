@@ -78,11 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 const SizedBox(
-
                   width: 5,
                 ),
                 RotatedBox(
-
                   quarterTurns: -1,
                   child: Row(
                     children: [
@@ -104,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Flexible(
                   child: SizedBox(
-
                     height: size.height*0.21, //0.24 //0,21
                     child: ListView.builder(
                       itemCount: 10,

@@ -24,7 +24,7 @@ class PriceWidget extends StatelessWidget {
       child: Row(
         children: [
           TextWidget(
-            text: "\₺${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}",
+            text: "₺${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}",
             color: Colors.green,
             textSize: 22,), //18
           SizedBox(
@@ -34,7 +34,7 @@ class PriceWidget extends StatelessWidget {
           Visibility(
             visible: isOnSale? true : false,
             child: Text(
-              "\₺${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}",
+              "₺${(price * int.parse(textPrice)).toStringAsFixed(2)}", //(userPrice * int.parse(textPrice)).toStringAsFixed(2)
               style: TextStyle(
                 fontSize: 15,
                 color: color,

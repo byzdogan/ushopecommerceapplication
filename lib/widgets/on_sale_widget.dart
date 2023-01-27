@@ -22,7 +22,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(7.0), //8
       child: Material(
         color: Theme.of(context).cardColor.withOpacity(0.9),
         borderRadius: BorderRadius.circular(12),
@@ -34,7 +34,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                 routeName: ProductDetails.routeName);
           },
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0), //8
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,

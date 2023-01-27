@@ -41,7 +41,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               onTap: () =>
               Navigator.canPop(context) ? Navigator.pop(context) : null,
               child: Icon(
-                IconlyLight.arrow_left_2,
+                IconlyLight.arrow_left,
                 color: color,
                 size: 24,
               ),
@@ -149,7 +149,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 10,
                       ),*/
                       quantityControl(
-                        fct: () {}, //for quantity control
+                        fct: () {
+                          if(_quantityTextController.text == "1") {
+                            return;
+                          }else{
+                            setState(() {
+                              _quantityTextController.text =
+                                  (int.parse(_quantityTextController.text) -1).toString();
+                            });
+                          }
+
+                        }, //for quantity control
                         icon: CupertinoIcons.minus,
                         color: Colors.redAccent,
                       ),
@@ -185,7 +195,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 5,
                       ),
                       quantityControl(
-                        fct: () {},
+                        fct: () {
+                          setState(() {
+                            _quantityTextController.text = (int.parse(_quantityTextController.text) +1).toString();
+                          });
+                        },
                         icon: CupertinoIcons.plus,
                         color: Colors.cyan,
                       ),
@@ -234,7 +248,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 height: 5,
                               ),
                               TextWidget(
-                                text: "Quantity : 1",
+                                text: "Quantity : ${_quantityTextController.text}",
                                 color: color,
                                 textSize: 20,
                                 isTitle: true,
@@ -268,7 +282,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
           )
-        ]),
+        ]
+          ),
     );
   }
 

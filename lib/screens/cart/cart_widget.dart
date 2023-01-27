@@ -81,7 +81,17 @@ class _CartWidgetState extends State<CartWidget> {
                           child: Row(
                             children: [
                               _quantityController(
-                                  fct: () {},
+                                  fct: () {
+                                    if(_quantityTextController.text == "1") {
+                                      return;
+                                    }else{
+                                      setState(() {
+                                        _quantityTextController.text =
+                                            (int.parse(_quantityTextController.text) -1).toString();
+                                      });
+                                    }
+
+                                  },
                                   icon: CupertinoIcons.minus,
                                   color: Colors.redAccent),
                               Flexible(
@@ -110,7 +120,11 @@ class _CartWidgetState extends State<CartWidget> {
                                 ),
                               ),
                               _quantityController(
-                                fct: () {},
+                                fct: () {
+                                  setState(() {
+                                    _quantityTextController.text = (int.parse(_quantityTextController.text) +1).toString();
+                                  });
+                                },
                                 icon: CupertinoIcons.plus,
                                 color: Colors.cyan,
                               ),
@@ -141,7 +155,7 @@ class _CartWidgetState extends State<CartWidget> {
                           ),
                           const SizedBox(height: 10,),
                           TextWidget(
-                            text: "100₺",
+                            text: "200₺",
                             color: color,
                             textSize: 20,
                             maxLines: 1,

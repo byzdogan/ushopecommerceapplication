@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:ushopecommerceapplication/screens/cart/cart_widget.dart';
+import 'package:ushopecommerceapplication/widgets/empty_screen.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
@@ -11,36 +13,49 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 1,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: TextWidget(
-          text: 'Cart',
-          textSize: 22,
-          isTitle: true,
-          color: color,),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                IconlyLight.delete, //IconlyBroken.delete,
-                color: color,
-              ))
-        ],
-      ),
-      body: Column( //A listview that wrapped by column need a size or you can wrap it with an expanded widget
-        children: [
-          _checkout(ctx: context),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (ctx, index){
-                return CartWidget();
-              }),),
-        ],
-      ),
-    );
+    bool _isEmpty = true;
+    return _isEmpty
+        ? const EmptyScreen(
+            title: 'Your cart is empty!',
+            subtitle: 'Add something and make me happy :)',
+            buttonText: 'Shop now',
+            imagePath: 'assets/images/emptycart2.png',
+          )
+        : Scaffold(
+            appBar: AppBar(
+              elevation: 1,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              title: TextWidget(
+                text: 'Cart',
+                textSize: 22,
+                isTitle: true,
+                color: color,),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      GlobalMethods.warningDialog(
+                          title: "Empty your cart",
+                          subtitle: "Are you sure?",
+                          fct: () {},
+                          context: context);
+                    },
+                    icon: Icon(
+                      IconlyLight.delete, //IconlyBroken.delete,
+                      color: color,
+                    ))
+              ],),
+            body: Column(//A listview that wrapped by column need a size or you can wrap it with an expanded widget
+                    children: [
+                      _checkout(ctx: context),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: 10,
+                          itemBuilder: (ctx, index){
+                            return CartWidget();
+                          }),),
+                    ],
+            ),
+          );
   }
 
   Widget _checkout({required BuildContext ctx}) {
@@ -73,7 +88,7 @@ class CartScreen extends StatelessWidget {
             const Spacer(),
             FittedBox(
               child: TextWidget(
-                text: "Total: 1000₺",
+                text: "Total: 2000₺",
                 color: color,
                 textSize: 20,
                 isTitle: true,),),
