@@ -6,6 +6,8 @@ import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/screens/auth/login.dart';
+import 'package:ushopecommerceapplication/screens/auth/register.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
 import 'package:ushopecommerceapplication/screens/home_screen.dart';
 import 'package:ushopecommerceapplication/screens/orders/orders_screen.dart';
@@ -54,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeProvider.getDarkTheme, context),
-            home: const BottomBarScreen(),
+            home: const LoginScreen(), //BottomBarScreen()
               routes: {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),
@@ -62,6 +64,8 @@ class _MyAppState extends State<MyApp> {
             WishlistScreen.routeName: (ctx) => const WishlistScreen(),
             OrdersScreen.routeName: (ctx) => const OrdersScreen(),
             ViewedRecentlyScreen.routeName: (ctx) => const ViewedRecentlyScreen(),
+            LoginScreen.routeName: (ctx) => const LoginScreen(),
+            RegisterScreen.routeName: (ctx) => const RegisterScreen(),
               }
           );
       }

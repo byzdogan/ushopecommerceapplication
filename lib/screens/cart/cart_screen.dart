@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:ushopecommerceapplication/screens/cart/cart_widget.dart';
+import 'package:ushopecommerceapplication/widgets/empty_cart_screen.dart';
 import 'package:ushopecommerceapplication/widgets/empty_screen.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
@@ -15,7 +16,7 @@ class CartScreen extends StatelessWidget {
     Size size = Utils(context).getScreenSize;
     bool _isEmpty = true;
     return _isEmpty
-        ? const EmptyScreen(
+        ? const EmptyCartScreen(
             title: 'Your cart is empty!',
             subtitle: 'Add something and make me happy :)',
             buttonText: 'Shop now',

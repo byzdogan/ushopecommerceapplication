@@ -28,7 +28,7 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
           title: "Your history is empty!",
           subtitle: "You have not viewed any USHOP product yet!",
           buttonText: 'Shop now',
-          imagePath: 'assets/images/emptyhistory1.png',
+          imagePath: 'assets/images/emptyhistory2.jpg',
         );
       }
       else{

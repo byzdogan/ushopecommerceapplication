@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
@@ -20,11 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final List<String> _offerImages = [
-    "assets/images/offers/uufoto3.jpeg",
-    "assets/images/offers/uufoto1.jpeg",
-    "assets/images/offers/uufoto2.jpeg",
-  ];
   @override
   Widget build(BuildContext context) {
     final Utils utils = Utils(context);
@@ -41,11 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Swiper(
               itemBuilder: (BuildContext context,int index){
                 return Image.asset(
-                  _offerImages[index],
+                  Constss.offerImages[index],
                   fit: BoxFit.fill,);
               },
               autoplay: true,
-              itemCount: _offerImages.length,
+              itemCount: Constss.offerImages.length,
               pagination: const SwiperPagination(
                 alignment: Alignment.bottomCenter,
                 builder: DotSwiperPaginationBuilder(

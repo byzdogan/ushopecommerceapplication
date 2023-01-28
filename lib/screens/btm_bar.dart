@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:ushopecommerceapplication/screens/cart/cart_screen.dart';
 import 'package:ushopecommerceapplication/screens/categories.dart';
 import 'package:ushopecommerceapplication/screens/home_screen.dart';
 import 'package:ushopecommerceapplication/screens/user.dart';
+import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
 
 class BottomBarScreen extends StatefulWidget {
@@ -54,7 +56,20 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             label: "Categories",
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+            icon: Badge(
+              toAnimate: true,
+              shape: BadgeShape.circle,
+              badgeColor: Colors.cyan,
+              borderRadius: BorderRadius.circular(8),
+              position: BadgePosition.topEnd(top: -12, end: -10),
+              badgeContent: FittedBox(
+                  child: TextWidget(
+                      text: '1',
+                      color: Colors.white,
+                      textSize: 15)
+              ),
+              child: Icon(
+                  _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),),
             label: "Cart",
           ),
           BottomNavigationBarItem(
