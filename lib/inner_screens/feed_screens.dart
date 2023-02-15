@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/contss.dart';
+import 'package:ushopecommerceapplication/models/products_model.dart';
+import 'package:ushopecommerceapplication/providers/products_providers.dart';
 import 'package:ushopecommerceapplication/widgets/back_widget.dart';
 import '../services/utils.dart';
 import '../widgets/feed_items.dart';
@@ -27,6 +31,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productProviders.getProducts;
     return Scaffold(
       appBar: AppBar(
         leading: BackWidget(),
@@ -88,8 +94,11 @@ class _FeedsScreenState extends State<FeedsScreen> {
             padding: EdgeInsets.zero,
             // crossAxisSpacing: 10,
             childAspectRatio: size.width / (size.height * 0.68),
-            children: List.generate(10, (index) {
-              return const FeedsWidget();
+            children: List.generate(allProducts.length, (index) {
+              return ChangeNotifierProvider.value(
+                value: allProducts[index],
+                child: const FeedsWidget(),
+              ) ;
             }),
           ),
         ]),

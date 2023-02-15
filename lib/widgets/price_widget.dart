@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
@@ -36,7 +37,8 @@ class PriceWidget extends StatelessWidget {
             child: Text(
               "₺${(price * int.parse(textPrice)).toStringAsFixed(2)}", //(userPrice * int.parse(textPrice)).toStringAsFixed(2)
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 16, //15
+                fontWeight: FontWeight.w600,
                 color: color,
                 decoration: TextDecoration.lineThrough,
               ),

@@ -3,9 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
+import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
 import 'package:ushopecommerceapplication/screens/auth/register.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
+import 'package:ushopecommerceapplication/screens/categories.dart';
 import 'package:ushopecommerceapplication/screens/home_screen.dart';
+import 'package:ushopecommerceapplication/screens/user.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/widgets/auth_button.dart';
 import 'package:ushopecommerceapplication/widgets/google_button.dart';
@@ -176,7 +179,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GlobalMethods.navigateTo(
+                      ctx: context,
+                      routeName: ForgetPasswordScreen.routeName);
+                          },
                     child: const Text(
                       'Forget password?',
                       maxLines: 1,
@@ -236,6 +243,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 AuthButton(
                   fct: () {
+                    //ben ekledim
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const BottomBarScreen(),
+                        ),
+                      );
+
                   },
                   buttonText: "Continue as a guest",
                   primary: Colors.black87,

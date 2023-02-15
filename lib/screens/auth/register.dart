@@ -261,9 +261,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 5.0,
+                  height: 25.0, //5
                 ),
-                Align(
+                /*Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
@@ -282,7 +282,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
                 AuthButton(
                   buttonText: 'Sign up',
                   fct: () {

@@ -1,7 +1,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
@@ -10,7 +12,9 @@ import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
 
 class FeedsWidget extends StatefulWidget {
-  const FeedsWidget({Key? key}) : super(key: key);
+  const FeedsWidget({Key? key,}) : super(key: key);
+
+  //final String imageUrl, title;
 
   @override
   State<FeedsWidget> createState() => _FeedsWidgetState();
@@ -36,6 +40,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     final theme = Utils(context).getTheme;
+    final productModel = Provider.of<ProductModel>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -43,57 +48,69 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            GlobalMethods.navigateTo(
+            Navigator.pushNamed(context, ProductDetails.routeName,
+                arguments: productModel.id);
+            /*GlobalMethods.navigateTo(
                 ctx: context,
-                routeName: ProductDetails.routeName);
+                routeName: ProductDetails.routeName);*/
           },
           borderRadius: BorderRadius.circular(12),
           child: Column(
             children:[
+              const SizedBox(height: 4,), //ben ekledim
               FancyShimmerImage(
-                imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+                imageUrl: productModel.imageUrl,
                 height: size.width*0.21,
                 width: size.width*0.2,
                 boxFit: BoxFit.fill,
               ),
               const SizedBox(height: 6,),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextWidget(
-                    text: "Title",
-                    color: color,
-                    textSize: 20,
-                    isTitle: true,
-                  ),
-                    const SizedBox(width: 30,),
-                    const HeartBTN(),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 6,),
-              Flexible(
-                flex: 4,
-                child: PriceWidget(
-                  salePrice: 200,
-                  price: 250,
-                  textPrice: _quantityTextController.text,
-                  isOnSale: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
+                      flex:3,
+                      child: TextWidget(
+                        maxLines: 1,
+                        text: productModel.title,
+                        color: color,
+                        textSize: 20,
+                        isTitle: true,
+                      ),
+                    ),
+                    //Spacer(),
+                    //const SizedBox(width: 30,),
+                    const Flexible(
+                        flex:1,
+                        child: HeartBTN(),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 6,), //6
+              Flexible(
+                flex: 4, //2
+                child: PriceWidget(
+                  salePrice: productModel.salePrice,
+                  price: productModel.price,
+                  textPrice: _quantityTextController.text,
+                  isOnSale: productModel.isOnSale,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(3.0), //5
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 6,
                       child: Row(
                         children: [
                           FittedBox(
                             child: TextWidget(
-                              text: "Quantity:",
+                              text: "Quantity:", //productModel.isPiece ? "Piece" : "KG",
                               color: color,
                               textSize: 20,
                               isTitle: true,
@@ -153,6 +170,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                       maxLines: 1,
                       color: color,
                       textSize: 20,
+                      isTitle: false,
                     ),
                     style: ButtonStyle(
                         backgroundColor:
@@ -168,8 +186,8 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         )),
                   )
               ),
-
-            ],),
+            ],
+          ),
         ),
       ),
     );

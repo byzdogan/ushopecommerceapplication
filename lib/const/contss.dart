@@ -1,5 +1,7 @@
 //It can be without defining a class
 
+import 'package:ushopecommerceapplication/models/products_model.dart';
+
 class Constss {
   static final List<String> offerImages = [
     "assets/images/offers/uufoto3.jpeg",
@@ -12,5 +14,7 @@ class Constss {
     "assets/images/us1.jpeg",
     "assets/images/us2.jpeg",
   ];
+
+
 }
 

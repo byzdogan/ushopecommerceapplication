@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/providers/products_providers.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
@@ -33,6 +34,13 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).color;
+    final productProviders = Provider.of<ProductsProvider>(context);
+    final productID = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrentProduct = productProviders.findProdById(productID);
+    double usedPrice = getCurrentProduct.isOnSale
+        ? getCurrentProduct.salePrice
+        : getCurrentProduct.price;
+    double totalPrice = usedPrice * int.parse(_quantityTextController.text);
 
     return Scaffold(
         appBar: AppBar(
@@ -53,7 +61,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Flexible(
             flex: 5, //2//picture height(size)
             child: FancyShimmerImage(
-              imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+              imageUrl: getCurrentProduct.imageUrl,
               boxFit: BoxFit.scaleDown,
               width: size.width,
               // height: screenHeight * .4,
@@ -80,7 +88,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         Flexible(
                           child: TextWidget(
-                            text: "title",
+                            text: getCurrentProduct.title,
                             color: color,
                             textSize: 25,
                             isTitle: true,
@@ -98,7 +106,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextWidget(
-                          text: "200₺",
+                          text: "${usedPrice.toStringAsFixed(2)}₺",
                           color: Colors.green,
                           textSize: 25,
                           isTitle: true,
@@ -107,9 +115,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: 10,
                         ),
                         Visibility(
-                          visible: true,
+                          visible: getCurrentProduct.isOnSale ? true : false,
                           child: Text(
-                            "250₺",
+                            "${getCurrentProduct.price.toStringAsFixed(2)}₺",
                             style: TextStyle(
                                 fontSize: 18,
                                 color: color,
@@ -229,14 +237,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: Row(
                                   children: [
                                     TextWidget(
-                                      text: 'Total',
+                                      text: "Total:",
                                       color: Colors.red.shade300,
                                       textSize: 22,
                                       isTitle: true,
                                     ),
                                     const SizedBox(width: 10,),
                                     TextWidget(
-                                      text: "200₺",
+                                      text: "${totalPrice.toStringAsFixed(2)}₺",
                                       color: color,
                                       textSize: 20,
                                       isTitle: true,

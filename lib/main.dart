@@ -5,7 +5,10 @@ import 'package:ushopecommerceapplication/const/theme_data.dart';
 import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/providers/products_providers.dart';
+import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
 import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/screens/auth/register.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
@@ -49,7 +52,10 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_){
           return themeChangeProvider;
-        })
+        }),
+        ChangeNotifierProvider(
+          create: (_) => ProductsProvider(),
+        ),
       ],
       child: Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
           return MaterialApp(
@@ -66,6 +72,7 @@ class _MyAppState extends State<MyApp> {
             ViewedRecentlyScreen.routeName: (ctx) => const ViewedRecentlyScreen(),
             LoginScreen.routeName: (ctx) => const LoginScreen(),
             RegisterScreen.routeName: (ctx) => const RegisterScreen(),
+            ForgetPasswordScreen.routeName: (ctx) => const ForgetPasswordScreen(),
               }
           );
       }

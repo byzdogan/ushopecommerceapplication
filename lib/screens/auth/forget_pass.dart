@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/auth_button.dart';
@@ -29,6 +30,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
+    final theme = Utils(context).getTheme;
+    Color color = Utils(context).color;
     return Scaffold(
       // backgroundColor: Colors.blue,
       body: Stack(
@@ -58,24 +61,34 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 SizedBox(
                   height: size.height * 0.1,
                 ),
-                const BackWidget(),
-                const SizedBox(
-                  height: 20,
+                InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () =>
+                  Navigator.canPop(context) ? Navigator.pop(context) : null,
+                  child: Icon(
+                    IconlyLight.arrow_left,
+                    color: theme == true ? Colors.white : Colors.white,
+                    size: 24,
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 TextWidget(
-                  text: 'Forget password',
+                  isTitle: true,
+                  text: "Forget your password?",
                   color: Colors.white,
                   textSize: 30,
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: size.height * 0.06,
                 ),
 
                 TextField(
                   controller: _emailTextController,
                   style: const TextStyle(color: Colors.white),
                   decoration: const InputDecoration(
-                    hintText: 'Email address',
+                    hintText: "Enter your Email",
                     hintStyle: TextStyle(color: Colors.white),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -89,10 +102,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 AuthButton(
-                  buttonText: 'Reset now',
+                  buttonText: "Reset password",
                   fct: () {
                     _forgetPassFCT();
                   },

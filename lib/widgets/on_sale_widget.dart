@@ -1,7 +1,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
@@ -21,6 +23,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final Color color = Utils(context).color;
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
+    final productModel = Provider.of<ProductModel>(context);
     return Padding(
       padding: const EdgeInsets.all(7.0), //8
       child: Material(
@@ -29,9 +32,11 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            GlobalMethods.navigateTo(
+            Navigator.pushNamed(context, ProductDetails.routeName,
+                arguments: productModel.id);
+            /*GlobalMethods.navigateTo(
                 ctx: context,
-                routeName: ProductDetails.routeName);
+                routeName: ProductDetails.routeName);*/
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0), //8
@@ -43,16 +48,12 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FancyShimmerImage(
-                      imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+                      imageUrl: productModel.imageUrl,
                       height: size.width*0.22,
                       width: size.width*0.22,
                       boxFit: BoxFit.fill,
                     ),
-                    Column(children: [
-                      //TextWidget(text: '', color: color, textSize: 22, isTitle: true,),
-                      //const SizedBox(height: 6,),
-                      Row(children: [
-                        GestureDetector(
+                    GestureDetector(
                           onTap: () {
                             print("add to cart is pressed");
                           },
@@ -65,25 +66,22 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                         HeartBTN(),
                         //const PriceWidget(),
                       ],
-                      ),
-                    ],
-                    ),
-                  ],
                 ),
+                const SizedBox(
+                  height: 5,),
+                TextWidget(
+                  text: productModel.title,
+                  color: color,
+                  textSize: 18, //16
+                  isTitle: true,),
+                const SizedBox(
+                  height: 5,),
                 PriceWidget(
-                  salePrice: 200,
-                  price: 250,
+                  salePrice: productModel.salePrice,
+                  price: productModel.price,
                   textPrice: "1",
                   isOnSale: true,
                 ),
-                const SizedBox(
-
-                  height: 5,),
-                TextWidget(
-                  text: "Sweatshirt",
-                  color: color,
-                  textSize: 16,
-                  isTitle: true,),
               ],
             ),
           ),
