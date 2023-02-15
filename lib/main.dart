@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/const/theme_data.dart';
+import 'package:ushopecommerceapplication/inner_screens/category_screen.dart';
 import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
             LoginScreen.routeName: (ctx) => const LoginScreen(),
             RegisterScreen.routeName: (ctx) => const RegisterScreen(),
             ForgetPasswordScreen.routeName: (ctx) => const ForgetPasswordScreen(),
+            CategoryScreen.routeName: (ctx) => const CategoryScreen(),
               }
           );
       }

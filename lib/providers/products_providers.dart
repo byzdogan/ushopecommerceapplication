@@ -15,6 +15,15 @@ class ProductsProvider with ChangeNotifier {
     return _productsList.firstWhere((element) => element.id == productId);
   }
 
+  List<ProductModel> findByCategory(String categoryName) {
+    List<ProductModel> _categoryList = _productsList
+        .where((element) => element.productCategoryName
+        .toLowerCase()
+        .contains(categoryName.toLowerCase()))
+        .toList();
+    return _categoryList;
+  }
+
   static final List<ProductModel> _productsList = [
     ProductModel(
       id: "Sweatshirt",
@@ -113,7 +122,7 @@ class ProductsProvider with ChangeNotifier {
       price: 60,
       salePrice: 40,
       imageUrl: "https://i.pinimg.com/564x/69/54/72/6954727bcf8fc9732a2ce5f5dbc3a055.jpg",
-      productCategoryName: "Vegetables",
+      productCategoryName: "Stationeries",
       isOnSale: false,
     ),
     ProductModel(

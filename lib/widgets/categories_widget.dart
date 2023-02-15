@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/inner_screens/category_screen.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/screens/categories.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
 class CategoriesWidget extends StatelessWidget {
@@ -19,7 +21,8 @@ class CategoriesWidget extends StatelessWidget {
     double _screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
         onTap: (){
-          print("CATEGORY IS PRESSED");
+          Navigator.pushNamed(context, CategoryScreen.routeName,
+              arguments: catText);
         },
         child:Container(
           decoration: BoxDecoration(
