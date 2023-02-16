@@ -38,11 +38,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     final productProvider = Provider.of<ProductsProvider>(context);
     final productID = ModalRoute.of(context)!.settings.arguments as String;
     final getCurrentProduct = productProvider.findProdById(productID);
-    //final cartProvider = Provider.of<CartProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
     double totalPrice = usedPrice * int.parse(_quantityTextController.text);
+    bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
 
     return Scaffold(
         appBar: AppBar(
@@ -274,12 +275,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                             color: Colors.cyan,
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: () {},
+                              onTap: _isInCart
+                                  ? null
+                                  :() {
+                                cartProvider.addProductsToCart(
+                                    productId: getCurrentProduct.id,
+                                    quantity: int.parse(_quantityTextController.text));
+                              },
                               borderRadius: BorderRadius.circular(10),
                               child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: TextWidget(
-                                      text: "Add to cart",
+                                      text: _isInCart ? "In Cart" : "Add to cart",
                                       color: Colors.white,
                                       textSize: 18)),
                             ),

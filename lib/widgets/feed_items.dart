@@ -43,6 +43,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final theme = Utils(context).getTheme;
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -166,13 +167,18 @@ class _FeedsWidgetState extends State<FeedsWidget> {
               SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: _isInCart
+                        ? null
+                        : () {
+                      /*if(_isInCart) {
+                        return;
+                      }  bunu yapmak yerine üstte ? : yaptık. */
                       cartProvider.addProductsToCart(
                           productId: productModel.id,
                           quantity: int.parse(_quantityTextController.text));
                     },
                     child: TextWidget(
-                      text: "Add to cart",
+                      text: _isInCart ? "In Cart" : "Add to cart",
                       maxLines: 1,
                       color: color,
                       textSize: 20,

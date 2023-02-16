@@ -40,13 +40,19 @@ class GlobalMethods {
                   ),),
                 TextButton(onPressed: (){
                   fct();
-                }, child: TextWidget(
-                  color:  Colors.redAccent,
-                  text: "OK",
-                  textSize: 18,
-                ),),
+                  if(Navigator.canPop(context)){
+                  Navigator.pop(context);
+                  }
+                  },
+                  child: TextWidget(
+                    color:  Colors.redAccent,
+                    text: "OK",
+                    textSize: 18,
+                  ),
+                ),
               ]
           );
-        });
+        }
+        );
   }
 }

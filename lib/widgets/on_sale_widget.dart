@@ -26,6 +26,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     Size size = Utils(context).getScreenSize;
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     return Padding(
       padding: const EdgeInsets.all(7.0), //8
       child: Material(
@@ -62,9 +63,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                 quantity: 1);
                           },
                           child: Icon(
-                            IconlyLight.bag,
+                            _isInCart ? IconlyBold.bag : IconlyLight.bag,
                             size: 22,
-                            color: color,
+                            color: _isInCart ? Colors.cyan : color,
                           ),
                         ),
                         HeartBTN(),

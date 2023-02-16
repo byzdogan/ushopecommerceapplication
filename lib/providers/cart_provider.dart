@@ -19,5 +19,40 @@ class CartProvider with ChangeNotifier {
           productId: productId,
           quantity: quantity,
         ));
+    notifyListeners();
+  }
+
+  void reduceQuantityByOne(String productId) {
+    _cartItems.update(
+      productId,
+          (value) => CartModel( //this value contains everything about the cartModel related to the this Id.
+        id: value.id,
+        productId: productId, //value.productId
+        quantity: value.quantity - 1,
+      ),
+    );
+    notifyListeners();
+  }
+
+  void increaseQuantityByOne(String productId) {
+    _cartItems.update(
+      productId,
+          (value) => CartModel(
+        id: value.id,
+        productId: productId,
+        quantity: value.quantity + 1,
+      ),
+    );
+    notifyListeners();
+  }
+
+  void removeOneItem(String productId) {
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners(); // Bu satır olmadan screen değiştirmediğim sürece silme işlemini göremem.
   }
 }

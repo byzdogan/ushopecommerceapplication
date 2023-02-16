@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/cart_model.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
+import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
@@ -13,7 +14,9 @@ import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
 class CartWidget extends StatefulWidget {
-  const CartWidget({Key? key}) : super(key: key);
+  const CartWidget({Key? key, required this.q}) : super(key: key);
+
+  final int q;
 
   @override
   State<CartWidget> createState() => _CartWidgetState();
@@ -24,7 +27,7 @@ class _CartWidgetState extends State<CartWidget> {
 
   @override
   void initState() {
-    _quantityTextController.text = "1";
+    _quantityTextController.text = widget.q.toString();
     super.initState();
   }
 
@@ -45,12 +48,15 @@ class _CartWidgetState extends State<CartWidget> {
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return GestureDetector(
       onTap: () {
-        GlobalMethods.navigateTo(
+        Navigator.pushNamed(context, ProductDetails.routeName,
+            arguments: cartModel.productId);
+        /*GlobalMethods.navigateTo(
             ctx: context,
-            routeName: ProductDetails.routeName);
+            routeName: ProductDetails.routeName);*/
       },
       child: Row(
         children: [
@@ -76,8 +82,11 @@ class _CartWidgetState extends State<CartWidget> {
                         boxFit: BoxFit.fill,
                       ),
                     ),
+                    const SizedBox(width: 10),
+                    //const Spacer(),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextWidget(
                           text: getCurrentProduct.title,
@@ -95,6 +104,7 @@ class _CartWidgetState extends State<CartWidget> {
                                     if(_quantityTextController.text == "1") {
                                       return;
                                     }else{
+                                      cartProvider.reduceQuantityByOne(cartModel.productId);
                                       setState(() {
                                         _quantityTextController.text =
                                             (int.parse(_quantityTextController.text) -1).toString();
@@ -131,8 +141,10 @@ class _CartWidgetState extends State<CartWidget> {
                               ),
                               _quantityController(
                                 fct: () {
+                                  cartProvider.increaseQuantityByOne(cartModel.productId);
                                   setState(() {
-                                    _quantityTextController.text = (int.parse(_quantityTextController.text) +1).toString();
+                                    _quantityTextController.text = (int.parse(
+                                        _quantityTextController.text) +1).toString();
                                   });
                                 },
                                 icon: CupertinoIcons.plus,
@@ -143,8 +155,8 @@ class _CartWidgetState extends State<CartWidget> {
                         ),
                       ],
                     ),
-                    //const Spacer(),
-                    const SizedBox(width: 20,),
+                    const Spacer(),
+                    //const SizedBox(width: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10,),
                       child: Column(
@@ -154,7 +166,9 @@ class _CartWidgetState extends State<CartWidget> {
                               const HeartBTN(),
                               const SizedBox(width: 10,),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  cartProvider.removeOneItem(cartModel.productId);
+                                },
                                 child: const Icon(
                                   CupertinoIcons.cart_badge_minus,
                                   color: Colors.redAccent,
