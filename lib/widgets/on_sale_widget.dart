@@ -4,6 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
+import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
@@ -24,6 +25,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
     final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(7.0), //8
       child: Material(
@@ -55,7 +57,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     ),
                     GestureDetector(
                           onTap: () {
-                            print("add to cart is pressed");
+                            cartProvider.addProductsToCart(
+                                productId: productModel.id,
+                                quantity: 1);
                           },
                           child: Icon(
                             IconlyLight.bag,

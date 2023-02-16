@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/screens/cart/cart_widget.dart';
 import 'package:ushopecommerceapplication/widgets/empty_cart_screen.dart';
 import 'package:ushopecommerceapplication/widgets/empty_screen.dart';
@@ -14,8 +16,11 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
-    bool _isEmpty = true;
-    return _isEmpty
+    //bool _isEmpty = true;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItemsList = cartProvider.getCartItems.values.toList();
+    //return _isEmpty
+    return cartItemsList.isEmpty
         ? const EmptyCartScreen(
             title: 'Your cart is empty!',
             subtitle: 'Add something and make me happy :)',
@@ -27,7 +32,7 @@ class CartScreen extends StatelessWidget {
               elevation: 1,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               title: TextWidget(
-                text: 'Cart',
+                text: "Cart (${cartItemsList.length})",
                 textSize: 22,
                 isTitle: true,
                 color: color,),
@@ -50,9 +55,12 @@ class CartScreen extends StatelessWidget {
                       _checkout(ctx: context),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: 10,
+                          itemCount: cartItemsList.length,
                           itemBuilder: (ctx, index){
-                            return CartWidget();
+                            return ChangeNotifierProvider.value(
+                              value: cartItemsList[index],
+                              child: const CartWidget(),
+                            ) ;
                           }),),
                     ],
             ),

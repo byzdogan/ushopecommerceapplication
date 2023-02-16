@@ -3,7 +3,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
-import 'package:ushopecommerceapplication/providers/products_providers.dart';
+import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/widgets/back_widget.dart';
 import 'package:ushopecommerceapplication/widgets/empty_products_widget.dart';
 import '../services/utils.dart';

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:ushopecommerceapplication/providers/products_providers.dart';
+import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
@@ -34,9 +35,10 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).color;
-    final productProviders = Provider.of<ProductsProvider>(context);
+    final productProvider = Provider.of<ProductsProvider>(context);
     final productID = ModalRoute.of(context)!.settings.arguments as String;
-    final getCurrentProduct = productProviders.findProdById(productID);
+    final getCurrentProduct = productProvider.findProdById(productID);
+    //final cartProvider = Provider.of<CartProvider>(context);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;

@@ -2,7 +2,11 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/models/cart_model.dart';
+import 'package:ushopecommerceapplication/models/products_model.dart';
+import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
@@ -35,6 +39,12 @@ class _CartWidgetState extends State<CartWidget> {
 
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).color;
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final cartModel = Provider.of<CartModel>(context);
+    final getCurrentProduct = productProvider.findProdById(cartModel.productId);
+    double usedPrice = getCurrentProduct.isOnSale
+        ? getCurrentProduct.salePrice
+        : getCurrentProduct.price;
 
     return GestureDetector(
       onTap: () {
@@ -62,7 +72,7 @@ class _CartWidgetState extends State<CartWidget> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: FancyShimmerImage(
-                        imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+                        imageUrl: getCurrentProduct.imageUrl,
                         boxFit: BoxFit.fill,
                       ),
                     ),
@@ -70,7 +80,7 @@ class _CartWidgetState extends State<CartWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextWidget(
-                          text: 'Title',
+                          text: getCurrentProduct.title,
                           textSize: 22,
                           color: color,
                           isTitle: true,
@@ -155,7 +165,7 @@ class _CartWidgetState extends State<CartWidget> {
                           ),
                           const SizedBox(height: 10,),
                           TextWidget(
-                            text: "200₺",
+                            text:"${usedPrice.toStringAsFixed(2)}₺",
                             color: color,
                             textSize: 20,
                             maxLines: 1,
