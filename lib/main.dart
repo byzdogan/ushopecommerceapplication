@@ -15,8 +15,6 @@ import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
 import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/screens/auth/register.dart';
-import 'package:ushopecommerceapplication/screens/btm_bar.dart';
-import 'package:ushopecommerceapplication/screens/home_screen.dart';
 import 'package:ushopecommerceapplication/screens/orders/orders_screen.dart';
 import 'package:ushopecommerceapplication/screens/viewed_recently/viewed_recently.dart';
 import 'package:ushopecommerceapplication/screens/wishlist/wishlist_screen.dart';

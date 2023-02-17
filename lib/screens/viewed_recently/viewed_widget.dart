@@ -25,11 +25,13 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
     Size size = Utils(context).getScreenSize;
     final productProvider = Provider.of<ProductsProvider>(context);
     final viewedProductModel = Provider.of<ViewedProductModel>(context);
+
     final getCurrentProduct =
-    productProvider.findProdById(viewedProductModel.productId);
+        productProvider.findProdById(viewedProductModel.productId);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
+
     final cartProvider = Provider.of<CartProvider>(context);
     bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
 
@@ -88,11 +90,11 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                           quantity: 1);
                     },
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Icon(
-                        _isInCart ? Icons.check : IconlyBold.plus,
-                        size: 22,
-                        color: _isInCart ? Colors.cyan : color,
+                        _isInCart ? Icons.check : CupertinoIcons.cart_badge_plus,
+                        size: 30,
+                        color: Colors.white,
                       ),
                     )),
               ),

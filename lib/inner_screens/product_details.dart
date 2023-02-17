@@ -33,26 +33,32 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).color;
+
     final productProvider = Provider.of<ProductsProvider>(context);
-    final productID = ModalRoute.of(context)!.settings.arguments as String;
-    final getCurrentProduct = productProvider.findProdById(productID);
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
-    final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
-    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrentProduct = productProvider.findProdById(productId);
+
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
+
     double totalPrice = usedPrice * int.parse(_quantityTextController.text);
+
     bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
-     
+    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
+
+    final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
+    /*final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values
+        .toList()
+        .reversed
+        .toList();*/
     return WillPopScope(
-      onWillPop: () async {
-        viewedProdProvider.addProductToHistory(
-            productId: productID);
+      onWillPop: () async{
+        viewedProdProvider.addProductToHistory(productId: productId);
         return true;
       },
       child: Scaffold(

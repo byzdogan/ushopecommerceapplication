@@ -13,6 +13,7 @@ class ViewedProductProvider with ChangeNotifier {
         productId,
             () => ViewedProductModel(
             id: DateTime.now().toString(), productId: productId));
+
     notifyListeners();
   }
 

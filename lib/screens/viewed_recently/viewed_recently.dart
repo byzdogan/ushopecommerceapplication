@@ -11,7 +11,6 @@ import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 
 class ViewedRecentlyScreen extends StatefulWidget {
   static const routeName = '/ViewedRecentlyScreen';
-
   const ViewedRecentlyScreen({Key? key}) : super(key: key);
 
   @override
@@ -23,7 +22,6 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
   @override
   Widget build(BuildContext context) {
     Color color = Utils(context).color;
-    // Size size = Utils(context).getScreenSize;
     //bool _isEmpty = true;
     final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
     final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values
@@ -31,7 +29,7 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
         .reversed
         .toList();
 
-      if (viewedProdItemsList.isEmpty) { // _isEmpty == true
+      if (viewedProdItemsList.isEmpty == true) { // _isEmpty == true
         return const EmptyScreen(
           title: "Your history is empty!",
           subtitle: "You have not viewed any USHOP product yet!",
@@ -70,13 +68,13 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
             Theme.of(context).scaffoldBackgroundColor,
           ),
           body: ListView.builder(
-              itemCount: 10,
+              itemCount: viewedProdItemsList.length,
               itemBuilder: (ctx, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
                   child: ChangeNotifierProvider.value(
                       value: viewedProdItemsList[index],
-                      child: ViewedRecentlyWidget(),
+                      child: const ViewedRecentlyWidget()
                   ),
                 );
               }),
