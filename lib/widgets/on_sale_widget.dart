@@ -61,7 +61,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                       boxFit: BoxFit.fill,
                     ),
                     GestureDetector(
-                          onTap: () {
+                          onTap: _isInCart
+                              ? null
+                              : () {
                             cartProvider.addProductsToCart(
                                 productId: productModel.id,
                                 quantity: 1);

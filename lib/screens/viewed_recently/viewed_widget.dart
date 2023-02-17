@@ -1,7 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
+import 'package:ushopecommerceapplication/models/viewed_model.dart';
+import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
@@ -18,6 +23,16 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
   Widget build(BuildContext context) {
     Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final viewedProductModel = Provider.of<ViewedProductModel>(context);
+    final getCurrentProduct =
+    productProvider.findProdById(viewedProductModel.productId);
+    double usedPrice = getCurrentProduct.isOnSale
+        ? getCurrentProduct.salePrice
+        : getCurrentProduct.price;
+    final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child:  GestureDetector(
@@ -30,7 +45,7 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FancyShimmerImage(
-              imageUrl: "https://cdn.dsmcdn.com/ty644/product/media/images/20221213/11/235843656/154436277/1/1_org_zoom.jpg",
+              imageUrl: getCurrentProduct.imageUrl,
               boxFit: BoxFit.fill,
               height: size.width * 0.27,
               width: size.width * 0.25,
@@ -41,7 +56,7 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
             Column(
               children: [
                 TextWidget(
-                  text: 'Title',
+                  text: getCurrentProduct.title,
                   color: color,
                   textSize: 24,
                   isTitle: true,
@@ -50,7 +65,7 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                   height: 12,
                 ),
                 TextWidget(
-                  text: "200₺",
+                  text: "${usedPrice.toStringAsFixed(2)}",
                   color: color,
                   textSize: 20,
                   isTitle: false,
@@ -65,13 +80,19 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                 color: Colors.cyan,
                 child: InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    onTap: () {},
-                    child: const Padding(
+                    onTap: _isInCart
+                        ? null
+                        : () {
+                      cartProvider.addProductsToCart(
+                          productId: getCurrentProduct.id,
+                          quantity: 1);
+                    },
+                    child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Icon(
-                        CupertinoIcons.add,
-                        color: Colors.white,
-                        size: 20,
+                        _isInCart ? Icons.check : IconlyBold.plus,
+                        size: 22,
+                        color: _isInCart ? Colors.cyan : color,
                       ),
                     )),
               ),

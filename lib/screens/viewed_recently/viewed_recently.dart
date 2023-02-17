@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/screens/viewed_recently/viewed_widget.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
@@ -21,17 +23,22 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
   @override
   Widget build(BuildContext context) {
     Color color = Utils(context).color;
-    bool _isEmpty = true;
     // Size size = Utils(context).getScreenSize;
-      if (_isEmpty == true) {
+    //bool _isEmpty = true;
+    final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
+    final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values
+        .toList()
+        .reversed
+        .toList();
+
+      if (viewedProdItemsList.isEmpty) { // _isEmpty == true
         return const EmptyScreen(
           title: "Your history is empty!",
           subtitle: "You have not viewed any USHOP product yet!",
           buttonText: 'Shop now',
           imagePath: 'assets/images/emptyhistory2.jpg',
         );
-      }
-      else{
+      }else{
         return Scaffold(
           appBar: AppBar(
             actions: [
@@ -65,9 +72,12 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
           body: ListView.builder(
               itemCount: 10,
               itemBuilder: (ctx, index) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
-                  child: ViewedRecentlyWidget(),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+                  child: ChangeNotifierProvider.value(
+                      value: viewedProdItemsList[index],
+                      child: ViewedRecentlyWidget(),
+                  ),
                 );
               }),
         );
