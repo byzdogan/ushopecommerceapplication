@@ -8,6 +8,7 @@ import 'package:ushopecommerceapplication/models/cart_model.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
@@ -45,6 +46,8 @@ class _CartWidgetState extends State<CartWidget> {
     final productProvider = Provider.of<ProductsProvider>(context);
     final cartModel = Provider.of<CartModel>(context);
     final getCurrentProduct = productProvider.findProdById(cartModel.productId);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
@@ -163,7 +166,9 @@ class _CartWidgetState extends State<CartWidget> {
                         children: [
                           Row(
                             children: [
-                              const HeartBTN(),
+                              HeartBTN(
+                                productId: getCurrentProduct.id,
+                                isInWishlist: _isInWishlist,),
                               const SizedBox(width: 10,),
                               InkWell(
                                 onTap: () {

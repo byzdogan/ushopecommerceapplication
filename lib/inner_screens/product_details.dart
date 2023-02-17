@@ -6,6 +6,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
@@ -39,6 +40,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     final productID = ModalRoute.of(context)!.settings.arguments as String;
     final getCurrentProduct = productProvider.findProdById(productID);
     final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
@@ -97,7 +100,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                             isTitle: true,
                           ),
                         ),
-                        const HeartBTN(),
+                        HeartBTN(
+                          productId: getCurrentProduct.id,
+                          isInWishlist: _isInWishlist,),
                       ],
                     ),
                   ),

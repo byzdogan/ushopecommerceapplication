@@ -10,6 +10,7 @@ import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
 import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/screens/auth/register.dart';
@@ -60,6 +61,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WishlistProvider(),
         ),
       ],
       child: Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {

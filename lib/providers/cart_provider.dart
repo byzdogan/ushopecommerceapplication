@@ -22,6 +22,10 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /*if(_cartItems.containsKey(productId)){
+      removeOneItem(productId);
+    }else{ butona bastığında sepetten çıkması için ama Add Cart buttonda işe yaramıyor feed_itemse gidip değiştirmek gerek*/
+
   void reduceQuantityByOne(String productId) {
     _cartItems.update(
       productId,

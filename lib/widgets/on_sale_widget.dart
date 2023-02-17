@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
@@ -26,7 +27,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     Size size = Utils(context).getScreenSize;
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(productModel.id);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
+
     return Padding(
       padding: const EdgeInsets.all(7.0), //8
       child: Material(
@@ -68,7 +72,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                             color: _isInCart ? Colors.cyan : color,
                           ),
                         ),
-                        HeartBTN(),
+                    HeartBTN(
+                      productId: productModel.id,
+                      isInWishlist: _isInWishlist,)
                         //const PriceWidget(),
                       ],
                 ),
