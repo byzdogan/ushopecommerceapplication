@@ -1,7 +1,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
@@ -32,7 +34,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
 
     return Padding(
-      padding: const EdgeInsets.all(7.0), //8
+      padding: const EdgeInsets.all(6.0), //7 //8
       child: Material(
         color: Theme.of(context).cardColor.withOpacity(0.9),
         borderRadius: BorderRadius.circular(12),
@@ -46,7 +48,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                 routeName: ProductDetails.routeName);*/
           },
           child: Padding(
-            padding: const EdgeInsets.all(8.0), //8
+            padding: const EdgeInsets.all(5.0), //8
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -64,6 +66,13 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                           onTap: _isInCart
                               ? null
                               : () {
+                            final User? user = authInstance.currentUser;
+                            if(user == null) {
+                              GlobalMethods.errorDialog(
+                                  error: "You need to login first!",
+                                  context: context);
+                              return;
+                            }
                             cartProvider.addProductsToCart(
                                 productId: productModel.id,
                                 quantity: 1);

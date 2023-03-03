@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
+import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/screens/orders/orders_screen.dart';
 import 'package:ushopecommerceapplication/screens/viewed_recently/viewed_recently.dart';
 import 'package:ushopecommerceapplication/screens/wishlist/wishlist_screen.dart';
@@ -22,6 +26,8 @@ class _UserScreenState extends State<UserScreen> {
     _adressTextController.dispose();
     super.dispose();
   }
+
+  final User? user = authInstance.currentUser;
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
@@ -97,7 +103,11 @@ class _UserScreenState extends State<UserScreen> {
                     _listTiles(
                       title: "Forget password",
                       icon: IconlyLight.unlock,
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context)=> const ForgetPasswordScreen(),
+                        ));
+                      },
                       color: color,),
                     SwitchListTile(
                       title: TextWidget(
@@ -118,13 +128,24 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                     const SizedBox(height: 20),
                     _listTiles(
-                      title: "Logout",
-                      icon: IconlyLight.logout,
+                      title: user == null ? "Login" : "Logout",
+                      icon: user == null ? IconlyLight.login : IconlyLight.logout,
                       onPressed: (){
+                        if(user == null) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const LoginScreen()
+                          ),);
+                          return;
+                        }
                        GlobalMethods.warningDialog(
                            title: "Sign Out",
                            subtitle: "Do you want to sign out?",
-                           fct: () {},
+                           fct: () async{
+                             await authInstance.signOut();
+                             Navigator.of(context).push(MaterialPageRoute(
+                                 builder: (context) => const LoginScreen()
+                             ),);
+                           },
                            context: context);
                       },
                       color: color,),

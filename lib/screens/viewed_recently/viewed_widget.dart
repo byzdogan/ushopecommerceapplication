@@ -1,8 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/viewed_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
@@ -39,8 +41,8 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
       padding: const EdgeInsets.all(8.0),
       child:  GestureDetector(
         onTap: () {
-          GlobalMethods.navigateTo(
-              ctx: context, routeName: ProductDetails.routeName);
+          //GlobalMethods.navigateTo(
+          //    ctx: context, routeName: ProductDetails.routeName);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,9 +84,17 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                 color: Colors.cyan,
                 child: InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    onTap: _isInCart
+                    onTap: /*_isInCart
                         ? null
-                        : () {
+                        : */() {
+                      final User? user = authInstance.currentUser;
+                      //print("USER ID IS ${user!.uid}");
+                      if(user == null) {
+                        GlobalMethods.errorDialog(
+                            error: "You need to login first!",
+                            context: context);
+                        return;
+                      }
                       cartProvider.addProductsToCart(
                           productId: getCurrentProduct.id,
                           quantity: 1);

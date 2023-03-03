@@ -1,13 +1,16 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import '../services/utils.dart';
 import '../widgets/text_widget.dart';
@@ -52,10 +55,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
 
     final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
-    /*final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values
-        .toList()
-        .reversed
-        .toList();*/
     return WillPopScope(
       onWillPop: () async{
         viewedProdProvider.addProductToHistory(productId: productId);
@@ -296,6 +295,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     onTap: _isInCart
                                         ? null
                                         :() {
+                                      final User? user = authInstance.currentUser;
+                                      if(user == null) {
+                                        GlobalMethods.errorDialog(
+                                            error: "You need to login first!",
+                                            context: context);
+                                        return;
+                                      }
                                       cartProvider.addProductsToCart(
                                           productId: getCurrentProduct.id,
                                           quantity: int.parse(_quantityTextController.text));

@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 
 class HeartBTN extends StatelessWidget {
@@ -17,6 +20,13 @@ class HeartBTN extends StatelessWidget {
     final Color color = Utils(context).color;
     return GestureDetector(
       onTap: () {
+        final User? user = authInstance.currentUser;
+        if(user == null) {
+          GlobalMethods.errorDialog(
+              error: "You need to login first!",
+              context: context);
+          return;
+        }
         wishlistProvider.addRemoveProductToWishlist(
             productId: productId);
       },

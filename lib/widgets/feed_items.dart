@@ -1,11 +1,15 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import 'package:ushopecommerceapplication/widgets/price_widget.dart';
@@ -46,6 +50,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(productModel.id);
+    //final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -53,6 +58,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
+            //viewedProdProvider.addProductToHistory(productId: productModel.id);
             Navigator.pushNamed(context, ProductDetails.routeName,
                 arguments: productModel.id);
             /*GlobalMethods.navigateTo(
@@ -177,6 +183,14 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                       /*if(_isInCart) {
                         return;
                       }  bunu yapmak yerine üstte ? : yaptık. */
+                      final User? user = authInstance.currentUser;
+                      //print("USER ID IS ${user!.uid}");
+                      if(user == null) {
+                        GlobalMethods.errorDialog(
+                            error: "You need to login first!",
+                            context: context);
+                        return;
+                      }
                       cartProvider.addProductsToCart(
                           productId: productModel.id,
                           quantity: int.parse(_quantityTextController.text));
