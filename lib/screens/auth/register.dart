@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
@@ -58,6 +59,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await authInstance.createUserWithEmailAndPassword(
           email: _emailTextController.text.toLowerCase().trim(), //trim is for removing spaces
           password: _passTextController.text.trim(),);
+        final User? user = authInstance.currentUser;
+        final _uid = user!.uid;
+        await FirebaseFirestore.instance.collection('users').doc(_uid).set({
+          'id': _uid,
+          'name': _fullNameController.text,
+          'email': _emailTextController.text.toLowerCase(),
+          'shipping-address': _addressTextController.text,
+          'userWish': [],
+          'userCart': [],
+          'createdAt': Timestamp.now(),
+        });
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context)=> const BottomBarScreen(),
           ));
@@ -87,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
-    Color color = Utils(context).color;
+    //Color color = Utils(context).color;
 
     return Scaffold(
       body: LoadingManager(
