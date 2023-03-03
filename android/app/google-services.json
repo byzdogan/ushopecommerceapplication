@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "587526600299",
+    "project_id": "ushopecommerceapplication",
+    "storage_bucket": "ushopecommerceapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587526600299:android:c0e55dc52145d931d3a32e",
+        "android_client_info": {
+          "package_name": "ushop.example.ushopecommerceapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587526600299-94884b0fsdrac71bigt4h64c6pkc470m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ushop.example.ushopecommerceapplication",
+            "certificate_hash": "62340f7e6ca86b1596fc8da7088e2d68e6366c88"
+          }
+        },
+        {
+          "client_id": "587526600299-31hdff908qs14ocumjcuph37pm0kv6ta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeoATiocl251V7rtWAhZGWb_wJZhh6Z64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587526600299-31hdff908qs14ocumjcuph37pm0kv6ta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
