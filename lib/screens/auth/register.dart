@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/const/firebase_const.dart';
+import 'package:ushopecommerceapplication/fetch_screen.dart';
 import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
 import 'package:ushopecommerceapplication/screens/loading_manager.dart';
@@ -71,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           'createdAt': Timestamp.now(),
         });
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context)=> const BottomBarScreen(),
+              builder: (context)=> const FetchScreen(),
           ));
         print("Succesfully registered!");
       } on FirebaseException catch (error) {
@@ -99,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
-    //Color color = Utils(context).color;
+    Color color = Utils(context).color;
 
     return Scaffold(
       body: LoadingManager(

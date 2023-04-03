@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [SizedBox(
 
-            height: size.height * 0.33,
+            height: size.height * 0.28, //0.33
             child: Swiper(
               itemBuilder: (BuildContext context,int index){
                 return Image.asset(

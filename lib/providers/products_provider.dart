@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 
 class ProductsProvider with ChangeNotifier {
+
+  static final List<ProductModel> _productsList = [];
 
   List<ProductModel> get getProducts { //for accessing to ChangeNotifier
     return _productsList;
@@ -9,6 +12,24 @@ class ProductsProvider with ChangeNotifier {
 
   List<ProductModel> get getOnSaleProducts {
     return _productsList.where((element) => element.isOnSale).toList();
+  }
+
+  Future<void> fetchProducts() async {
+    await FirebaseFirestore.instance.collection("products").get().then((
+        QuerySnapshot productSnapshot) {
+          productSnapshot.docs.forEach((element) {
+            _productsList.insert(
+                0,
+                ProductModel(
+                    id: element.get("id"),
+                    title: element.get("title"),
+                    imageUrl: element.get("imageUrl"),
+                    productCategoryName: element.get("productCategoryName"),
+                    price: double.parse(element.get("price"),),
+                    salePrice: (element.get("salePrice")).toDouble(),
+                    isOnSale: element.get("isOnSale"), ));
+          });
+    }); // tüm ürünleri göstermek istediğimiz için id eklemedik kullanıcada öyle değildi.
   }
 
   ProductModel findProdById(String productId) {
@@ -24,7 +45,7 @@ class ProductsProvider with ChangeNotifier {
     return _categoryList;
   }
 
-  static final List<ProductModel> _productsList = [
+  /*static final List<ProductModel> _productsList = [
     ProductModel(
       id: "Sweatshirt",
       title: "Sweatshirt",
@@ -134,5 +155,5 @@ class ProductsProvider with ChangeNotifier {
       productCategoryName: "Accessories",
       isOnSale: false,
     ),
-  ];
+  ];*/
 }

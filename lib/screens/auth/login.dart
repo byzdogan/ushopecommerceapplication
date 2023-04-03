@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/const/firebase_const.dart';
+import 'package:ushopecommerceapplication/fetch_screen.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
 import 'package:ushopecommerceapplication/screens/auth/register.dart';
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailTextController.text.toLowerCase().trim(), //trim is for removing spaces
           password: _passwordTextController.text.trim(),);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context)=> const BottomBarScreen(),
+          builder: (context)=> const FetchScreen(),
         ));
         print("Succesfully logged in!");
       } on FirebaseException catch (error) {
@@ -288,12 +289,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AuthButton(
                     fct: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const BottomBarScreen(),
-                          ),
-                        );
-
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (ctx) => const FetchScreen(),
+                      ));
                     },
                     buttonText: "Continue as a guest",
                     primary: Colors.black87,
