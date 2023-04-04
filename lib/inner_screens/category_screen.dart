@@ -21,6 +21,7 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   final TextEditingController? _searchTextController = TextEditingController();
   final FocusNode _searchTextFocusNode = FocusNode();
+  List<ProductModel> listProductSearch = [];
   @override
   void dispose() {
     _searchTextController!.dispose();
@@ -62,8 +63,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: TextField(
                       focusNode: _searchTextFocusNode,
                       controller: _searchTextController,
-                      onChanged: (value) {
+                      onChanged: (valuee) {
                         setState(() {
+                          listProductSearch = productProviders.searchQuery(valuee);
 
                         });
                       },
@@ -94,20 +96,28 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                   ),
                 ),
-                GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  padding: EdgeInsets.zero,
-                  // crossAxisSpacing: 10,
-                  childAspectRatio: size.width / (size.height * 0.68),
-                  children: List.generate(productsByCategory.length, (index) {
-                    return ChangeNotifierProvider.value(
-                      value: productsByCategory[index],
-                      child: const FeedsWidget(),
-                    ) ;
-                  }),
-                ),
+                _searchTextController!.text.isNotEmpty && listProductSearch.isEmpty
+                    ? const EmptyProductsWidget(
+                        text: "The product that you searched can not be found. Please try another keyword! ")
+                    : GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        padding: EdgeInsets.zero,
+                        // crossAxisSpacing: 10,
+                        childAspectRatio: size.width / (size.height * 0.68),
+                        children: List.generate(
+                            _searchTextController!.text.isNotEmpty
+                                ? listProductSearch.length
+                                : productsByCategory.length, (index) { //productsByCategory
+                            return ChangeNotifierProvider.value(
+                              value: _searchTextController!.text.isNotEmpty
+                                  ? listProductSearch[index]
+                                  : productsByCategory[index],
+                              child: const FeedsWidget(),
+                          ) ;
+                        }),
+                      ),
               ]),
       ),
     );

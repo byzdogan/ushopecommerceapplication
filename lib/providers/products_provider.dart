@@ -4,7 +4,7 @@ import 'package:ushopecommerceapplication/models/products_model.dart';
 
 class ProductsProvider with ChangeNotifier {
 
-  static final List<ProductModel> _productsList = [];
+  static List<ProductModel> _productsList = [];
 
   List<ProductModel> get getProducts { //for accessing to ChangeNotifier
     return _productsList;
@@ -17,6 +17,7 @@ class ProductsProvider with ChangeNotifier {
   Future<void> fetchProducts() async {
     await FirebaseFirestore.instance.collection("products").get().then((
         QuerySnapshot productSnapshot) {
+          _productsList = []; //_productsList.clear();
           productSnapshot.docs.forEach((element) {
             _productsList.insert(
                 0,
@@ -43,6 +44,15 @@ class ProductsProvider with ChangeNotifier {
         .contains(categoryName.toLowerCase()))
         .toList();
     return _categoryList;
+  }
+
+  List<ProductModel> searchQuery(String searchText) {
+    List<ProductModel> _searchList = _productsList
+        .where((element) => element.title
+        .toLowerCase()
+        .contains(searchText.toLowerCase()))
+        .toList();
+    return _searchList;
   }
 
   /*static final List<ProductModel> _productsList = [

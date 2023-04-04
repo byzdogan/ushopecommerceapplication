@@ -5,6 +5,7 @@ import 'package:ushopecommerceapplication/const/contss.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/widgets/back_widget.dart';
+import 'package:ushopecommerceapplication/widgets/empty_products_widget.dart';
 import '../services/utils.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
@@ -34,6 +35,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
     super.initState();
   }*/
 
+  List<ProductModel> listProductSearch = [];
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
@@ -62,9 +64,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
               child: TextField(
                 focusNode: _searchTextFocusNode,
                 controller: _searchTextController,
-                onChanged: (value) {
+                onChanged: (valuee) {
                   setState(() {
-
+                    listProductSearch = productProviders.searchQuery(valuee);
                   });
                 },
                 decoration: InputDecoration(
@@ -94,16 +96,24 @@ class _FeedsScreenState extends State<FeedsScreen> {
               ),
             ),
           ),
-          GridView.count(
+          _searchTextController!.text.isNotEmpty && listProductSearch.isEmpty
+              ? const EmptyProductsWidget(
+              text: "The product that you searched can not be found. Please try another keyword! ")
+              : GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
             padding: EdgeInsets.zero,
             // crossAxisSpacing: 10,
             childAspectRatio: size.width / (size.height * 0.68),
-            children: List.generate(allProducts.length, (index) {
+            children: List.generate(
+                _searchTextController!.text.isNotEmpty
+                    ? listProductSearch.length
+                    : allProducts.length, (index) { //productsByCategory
               return ChangeNotifierProvider.value(
-                value: allProducts[index],
+                value: _searchTextController!.text.isNotEmpty
+                    ? listProductSearch[index]
+                    : allProducts[index],
                 child: const FeedsWidget(),
               ) ;
             }),
