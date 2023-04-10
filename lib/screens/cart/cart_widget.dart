@@ -171,8 +171,11 @@ class _CartWidgetState extends State<CartWidget> {
                                 isInWishlist: _isInWishlist,),
                               const SizedBox(width: 10,),
                               InkWell(
-                                onTap: () {
-                                  cartProvider.removeOneItem(cartModel.productId);
+                                onTap: () async{
+                                  await cartProvider.removeOneItem(
+                                          cartId: cartModel.id,
+                                          productId: cartModel.productId,
+                                          quantity: cartModel.quantity);
                                 },
                                 child: const Icon(
                                   CupertinoIcons.cart_badge_minus,
@@ -184,9 +187,9 @@ class _CartWidgetState extends State<CartWidget> {
                           ),
                           const SizedBox(height: 10,),
                           TextWidget(
-                            text:"${usedPrice.toStringAsFixed(2)}₺",
+                            text:"${(usedPrice * int.parse(_quantityTextController.text)).toStringAsFixed(2)}₺",
                             color: color,
-                            textSize: 20,
+                            textSize: 19,
                             maxLines: 1,
                             isTitle: true,
                           ),

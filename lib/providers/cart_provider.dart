@@ -29,12 +29,13 @@ class CartProvider with ChangeNotifier {
       removeOneItem(productId);
     }else{ butona bastığında sepetten çıkması için ama Add Cart buttonda işe yaramıyor feed_itemse gidip değiştirmek gerek*/
 
+  //final User? user = authInstance.currentUser; burda da kullanabilirim hata almıyorum ama her fonksiyonun içine ayrı ayrı tanımladım.
+  final userCollection = FirebaseFirestore.instance.collection('users');
+
   Future<void> fetchCart()async {
     final User? user = authInstance.currentUser;
-    String _uid = user!.uid;
-
     final DocumentSnapshot userDoc =
-    await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    await userCollection.doc(user!.uid).get();
     if (userDoc == null) {
       return;
     }
@@ -77,12 +78,37 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeOneItem(String productId) {
+  Future<void> removeOneItem({
+    required String cartId,
+    required String productId,
+    required int quantity}) async{
+    final User? user = authInstance.currentUser;
+    await userCollection.doc(user!.uid).update({
+      "userCart" : FieldValue.arrayRemove([
+        {
+          "cartId": cartId,
+          "productId": productId,
+          "quantity": quantity,
+        }
+      ])
+    });
     _cartItems.remove(productId);
+    await fetchCart();
     notifyListeners();
   }
 
-  void clearCart() {
+  Future<void> clearOnlineCart() async{
+    final User? user = authInstance.currentUser;
+    await userCollection.doc(user!.uid).update({
+      "userCart" : [],
+    });
+    _cartItems.clear();
+    notifyListeners();
+  }
+
+
+
+  void clearLocalCart() {
     _cartItems.clear();
     notifyListeners(); // Bu satır olmadan screen değiştirmediğim sürece silme işlemini göremem.
   }

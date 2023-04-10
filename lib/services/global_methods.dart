@@ -140,12 +140,12 @@ class GlobalMethods {
   }) async {
     final User? user = authInstance.currentUser;
     final _uid = user!.uid;
-    final cardId = Uuid().v4();
+    final cartId = Uuid().v4();
     try{
       FirebaseFirestore.instance.collection('users').doc(_uid).update({
         'userCart': FieldValue.arrayUnion([
           {
-            "cardId": cardId,
+            "cartId": cartId,
             "productId": productId,
             "quantity": quantity,
           }

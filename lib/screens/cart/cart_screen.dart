@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/screens/cart/cart_widget.dart';
 import 'package:ushopecommerceapplication/widgets/empty_cart_screen.dart';
 import 'package:ushopecommerceapplication/widgets/empty_screen.dart';
@@ -42,8 +43,9 @@ class CartScreen extends StatelessWidget {
                       GlobalMethods.warningDialog(
                           title: "Empty your cart",
                           subtitle: "Are you sure?",
-                          fct: () {
-                            cartProvider.clearCart();
+                          fct: () async{
+                            await cartProvider.clearOnlineCart();
+                            cartProvider.clearLocalCart();
                           },
                           context: context);
                     },
@@ -74,6 +76,16 @@ class CartScreen extends StatelessWidget {
   Widget _checkout({required BuildContext ctx}) {
     final Color color = Utils(ctx).color;
     Size size = Utils(ctx).getScreenSize;
+    final cartProvider = Provider.of<CartProvider>(ctx);
+    final productProvider = Provider.of<ProductsProvider>(ctx);
+    double totalPrice = 0.0;
+    cartProvider.getCartItems.forEach((key, value) { // reading the cart map and looping it
+      // with this value we can access everything in out cart model
+      final getCurrentProduct = productProvider.findProdById(value.productId);
+      totalPrice += (getCurrentProduct.isOnSale
+              ? getCurrentProduct.salePrice
+              : getCurrentProduct.price) * value.quantity;
+    });
     return SizedBox(
       width: double.infinity,
       height: size.height * 0.1,
@@ -101,7 +113,7 @@ class CartScreen extends StatelessWidget {
             const Spacer(),
             FittedBox(
               child: TextWidget(
-                text: "Total: 2000₺",
+                text: "Total: ${totalPrice.toStringAsFixed(2)}₺",
                 color: color,
                 textSize: 20,
                 isTitle: true,),),
