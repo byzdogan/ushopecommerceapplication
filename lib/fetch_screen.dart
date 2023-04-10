@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
 
 class FetchScreen extends StatefulWidget {
@@ -22,14 +23,18 @@ class _FetchScreenState extends State<FetchScreen> {
           Provider.of<ProductsProvider>(context, listen: false);
       final cartProvider =
           Provider.of<CartProvider>(context, listen: false);
+      final wishlistProvider =
+      Provider.of<WishlistProvider>(context, listen: false);
       final User? user = authInstance.currentUser;
       if(user == null){
         await productsProvider.fetchProducts();
         cartProvider.clearLocalCart();
+        wishlistProvider.clearLocalWishlist();
       }
       else{
         await productsProvider.fetchProducts();
         await  cartProvider.fetchCart();
+        await wishlistProvider.fetchWishlist();
       }
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (ctx) => const BottomBarScreen(),

@@ -50,8 +50,9 @@ class WishlistScreen extends StatelessWidget {
                     GlobalMethods.warningDialog(
                         title: "Empty your wishlist",
                         subtitle: "Are you sure?",
-                        fct: () {
-                          wishlistProvider.clearWishlist();
+                        fct: () async{
+                          await wishlistProvider.clearOnlineWishlist();
+                          wishlistProvider.clearLocalWishlist();
                         },
                         context: context);
                   },
