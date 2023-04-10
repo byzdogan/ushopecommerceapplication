@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
+import 'package:uuid/uuid.dart';
 class GlobalMethods {
   static navigateTo({required BuildContext ctx, required String routeName}){
     Navigator.pushNamed(ctx, routeName);
@@ -127,5 +132,36 @@ class GlobalMethods {
         }
     );
   }
+
+  static Future<void> addToCart({
+    required String productId,
+    required int quantity,
+    required BuildContext context,
+  }) async {
+    final User? user = authInstance.currentUser;
+    final _uid = user!.uid;
+    final cardId = Uuid().v4();
+    try{
+      FirebaseFirestore.instance.collection('users').doc(_uid).update({
+        'userCart': FieldValue.arrayUnion([
+          {
+            "cardId": cardId,
+            "productId": productId,
+            "quantity": quantity,
+          }
+        ])
+      });
+      await Fluttertoast.showToast(
+          msg: "The product has been added to your cart",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+      );
+    }catch (error){
+      errorDialog(
+          error: error.toString(),
+          context: context);
+    }
+  }
+
 
 }

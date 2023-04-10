@@ -1,12 +1,15 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/wishlist_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/heart_btn.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
@@ -65,12 +68,30 @@ class WishlistWidget extends StatelessWidget {
                       children: [
                         Row(
                             children: [
-                              IconButton(onPressed: () {
-                                //ben ekledim
-                                cartProvider.addProductsToCart(
-                                    productId: getCurrentProduct.id,
-                                    quantity: 1);
-                              },
+                              IconButton( //BEN EKLEDİM
+                                onPressed: _isInCart
+                                    ? null
+                                    : () async{
+                                    /*if(_isInCart) {
+                                    return;
+                                  }  bunu yapmak yerine üstte ? : yaptık. */
+                                  final User? user = authInstance.currentUser;
+                                  //print("USER ID IS ${user!.uid}");
+                                  if(user == null) {
+                                    GlobalMethods.errorDialog(
+                                        error: "You need to login first!",
+                                        context: context);
+                                    return;
+                                  }
+                                  await GlobalMethods.addToCart(
+                                      productId: getCurrentProduct.id,
+                                      quantity: 1,
+                                      context: context);
+                                  await cartProvider.fetchCart();
+                                  /*cartProvider.addProductsToCart(
+                                    productId: productModel.id,
+                                    quantity: int.parse(_quantityTextController.text));*/
+                                },
                                 icon: Icon (
                                   _isInCart ? IconlyBold.bag : IconlyLight.bag,
                                   color: _isInCart ? Colors.cyan : color,),

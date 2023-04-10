@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class CartModel with ChangeNotifier {
-  final String id, productId;
+  final String? id;
+  final String productId;
   final int quantity;
 
   CartModel({

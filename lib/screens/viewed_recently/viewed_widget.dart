@@ -84,9 +84,9 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                 color: Colors.cyan,
                 child: InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    onTap: /*_isInCart
+                    onTap: _isInCart
                         ? null
-                        : */() {
+                        : () async{
                       final User? user = authInstance.currentUser;
                       //print("USER ID IS ${user!.uid}");
                       if(user == null) {
@@ -95,9 +95,14 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                             context: context);
                         return;
                       }
-                      cartProvider.addProductsToCart(
+                      await GlobalMethods.addToCart(
+                              productId: getCurrentProduct.id,
+                              quantity: 1,
+                              context: context);
+                      await cartProvider.fetchCart();
+                      /*cartProvider.addProductsToCart(
                           productId: getCurrentProduct.id,
-                          quantity: 1);
+                          quantity: 1);*/
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

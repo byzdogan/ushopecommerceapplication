@@ -294,7 +294,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   child: InkWell(
                                     onTap: _isInCart
                                         ? null
-                                        :() {
+                                        : () async{
                                       final User? user = authInstance.currentUser;
                                       if(user == null) {
                                         GlobalMethods.errorDialog(
@@ -302,9 +302,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             context: context);
                                         return;
                                       }
-                                      cartProvider.addProductsToCart(
+                                      await GlobalMethods.addToCart(
+                                              productId: getCurrentProduct.id,
+                                              quantity: int.parse(_quantityTextController.text),
+                                              context: context);
+                                      await cartProvider.fetchCart();
+                                      /*cartProvider.addProductsToCart(
                                           productId: getCurrentProduct.id,
-                                          quantity: int.parse(_quantityTextController.text));
+                                          quantity: int.parse(_quantityTextController.text));*/
                                     },
                                     borderRadius: BorderRadius.circular(10),
                                     child: Padding(
