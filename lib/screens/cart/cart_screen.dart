@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/orders_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/screens/cart/cart_widget.dart';
 import 'package:ushopecommerceapplication/widgets/empty_cart_screen.dart';
@@ -9,6 +14,7 @@ import 'package:ushopecommerceapplication/widgets/empty_screen.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -78,6 +84,7 @@ class CartScreen extends StatelessWidget {
     Size size = Utils(ctx).getScreenSize;
     final cartProvider = Provider.of<CartProvider>(ctx);
     final productProvider = Provider.of<ProductsProvider>(ctx);
+    final ordersProvider = Provider.of<OrdersProvider>(ctx);
     double totalPrice = 0.0;
     cartProvider.getCartItems.forEach((key, value) { // reading the cart map and looping it
       // with this value we can access everything in out cart model
@@ -99,7 +106,45 @@ class CartScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
-                onTap: () {},
+                onTap: () async{
+                  User? user = authInstance.currentUser;
+                  final orderId = const Uuid().v4();
+                  final productProvider = Provider.of<ProductsProvider>(ctx, listen: false);
+                  cartProvider.getCartItems.forEach((key, value) async{
+                    final getCurrentProduct = productProvider.findProdById(value.productId);
+                    try{
+                      await FirebaseFirestore.instance
+                          .collection("orders")
+                          .doc(orderId)
+                          .set({
+                        "orderId": orderId,
+                        "userId": user!.uid,
+                        "productId": value.productId,
+                        "price": (getCurrentProduct.isOnSale
+                            ? getCurrentProduct.salePrice
+                            : getCurrentProduct.price) * value.quantity,
+                        "totalPrice": totalPrice,
+                        "quantity": value.quantity,
+                        "imageUrl": getCurrentProduct.imageUrl,
+                        "userName": user.displayName,
+                        "orderDate": Timestamp.now(),
+                      });
+                      await cartProvider.clearOnlineCart();
+                      cartProvider.clearLocalCart();
+                      ordersProvider.fetchOrders();
+                      await Fluttertoast.showToast(
+                        msg: "Thank you for using UShop! Your order has been placed.",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.CENTER,
+                      );
+                    }catch(error) {
+                      GlobalMethods.errorDialog(
+                          error: error.toString(),
+                          context: ctx);
+                    }finally{}
+                  });
+
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextWidget(

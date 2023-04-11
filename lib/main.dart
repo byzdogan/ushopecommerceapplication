@@ -9,8 +9,9 @@ import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/inner_screens/on_sale_screen.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
-import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/providers/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/orders_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
 import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
@@ -92,6 +93,9 @@ class _MyAppState extends State<MyApp> {
             ),
             ChangeNotifierProvider(
               create: (_) => ViewedProductProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => OrdersProvider(),
             ),
           ],
           child: Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/category_screen.dart';
-import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/providers/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/screens/categories.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
 

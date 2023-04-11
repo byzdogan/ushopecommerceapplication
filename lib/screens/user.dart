@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/const/firebase_const.dart';
-import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/providers/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/screens/auth/forget_pass.dart';
 import 'package:ushopecommerceapplication/screens/auth/login.dart';
 import 'package:ushopecommerceapplication/screens/loading_manager.dart';

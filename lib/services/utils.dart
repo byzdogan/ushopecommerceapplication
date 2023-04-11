@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/providers/dark_theme_provider.dart';
 
 
 class Utils {

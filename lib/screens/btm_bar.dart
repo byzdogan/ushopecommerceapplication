@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:ushopecommerceapplication/provider/dark_theme_provider.dart';
+import 'package:ushopecommerceapplication/providers/dark_theme_provider.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/screens/cart/cart_screen.dart';
 import 'package:ushopecommerceapplication/screens/categories.dart';
