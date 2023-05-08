@@ -36,6 +36,9 @@ class _FetchScreenState extends State<FetchScreen> {
         orderProvider.clearLocalOrders();
       }
       else{
+        cartProvider.clearLocalCart();
+        wishlistProvider.clearLocalWishlist();
+        orderProvider.clearLocalOrders();
         await productsProvider.fetchProducts();
         await  cartProvider.fetchCart();
         await wishlistProvider.fetchWishlist();

@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Flexible(
                   child: SizedBox(
-                    height: size.height*0.21, //0.24 //0,21
+                    height: size.height*0.24, //0.24 //0,21
                     child: ListView.builder(
                       itemCount: productsOnSale.length < 10
                           ? productsOnSale.length
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
               crossAxisSpacing: 10,
-              childAspectRatio: size.width / (size.height * 0.65), //0.59 //0.65
+              childAspectRatio: size.width / (size.height * 0.78), //0.59 //0.65
               children: List.generate(
                   allProducts.length < 4
                       ? allProducts.length // length 3

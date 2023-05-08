@@ -51,11 +51,14 @@ class _LoginScreenState extends State<LoginScreen> {
   void _submitFormOnLogin() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    setState(() {
+    /*setState(() {
       _isLoading = true;
-    });
+    });*/
     if (isValid) {
-      _formKey.currentState!.save();
+      _formKey.currentState!.save(); //set statei buraya koymuş normalde üstteydi
+      setState(() {
+        _isLoading = true;
+      });
       try {
         await authInstance.signInWithEmailAndPassword(
           email: _emailTextController.text.toLowerCase().trim(), //trim is for removing spaces

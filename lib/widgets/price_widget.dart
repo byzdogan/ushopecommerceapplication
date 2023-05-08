@@ -20,17 +20,14 @@ class PriceWidget extends StatelessWidget {
     final Color color = Utils(context).color;
     double userPrice = isOnSale? salePrice : price;
     return FittedBox(
-
-
       child: Row(
         children: [
           TextWidget(
             text: "₺${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}",
-            color: Colors.green,
+            color: Colors.cyan.shade700,
             textSize: 22,), //18
           SizedBox(
-
-            width: 5,
+            width: 4, //4
           ),
           Visibility(
             visible: isOnSale? true : false,
@@ -38,6 +35,7 @@ class PriceWidget extends StatelessWidget {
               "₺${(price * int.parse(textPrice)).toStringAsFixed(2)}", //(userPrice * int.parse(textPrice)).toStringAsFixed(2)
               style: TextStyle(
                 fontSize: 16, //15
+                fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.w600,
                 color: color,
                 decoration: TextDecoration.lineThrough,
