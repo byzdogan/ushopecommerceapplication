@@ -6,8 +6,10 @@ import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/orders_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/screens/btm_bar.dart';
+import 'package:ushopecommerceapplication/services/utils.dart';
 
 class FetchScreen extends StatefulWidget {
   const FetchScreen({Key? key}) : super(key: key);
@@ -28,17 +30,22 @@ class _FetchScreenState extends State<FetchScreen> {
       Provider.of<WishlistProvider>(context, listen: false);
       final orderProvider =
       Provider.of<OrdersProvider>(context, listen: false);
+      final viewedProvider =
+      Provider.of<ViewedProductProvider>(context, listen:false);
+
       final User? user = authInstance.currentUser;
       if(user == null){
         await productsProvider.fetchProducts();
         cartProvider.clearLocalCart();
         wishlistProvider.clearLocalWishlist();
         orderProvider.clearLocalOrders();
+        viewedProvider.clearHistory();
       }
       else{
         cartProvider.clearLocalCart();
         wishlistProvider.clearLocalWishlist();
         orderProvider.clearLocalOrders();
+        viewedProvider.clearHistory();
         await productsProvider.fetchProducts();
         await  cartProvider.fetchCart();
         await wishlistProvider.fetchWishlist();
@@ -49,25 +56,24 @@ class _FetchScreenState extends State<FetchScreen> {
     });
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
+    Size size = Utils(context).getScreenSize;
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            'assets/images/img.png',
-            fit: BoxFit.cover,
-            height: double.infinity,
+          Center(
+            child: Image.asset(
+              'assets/images/img.png',
+              fit: BoxFit.fitWidth,
+              height: size.width ,
+            ),
           ),
-          Container(
-            color: Colors.black.withOpacity(0.7),
-          ),
-          const Center(
+          /*const Center(
             child: SpinKitCircle(
               color: Colors.cyan,
             ),
-          )
+          )*/
         ],
       ),
     );

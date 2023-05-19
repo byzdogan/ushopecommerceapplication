@@ -7,6 +7,7 @@ import 'package:ushopecommerceapplication/const/firebase_const.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
+import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
@@ -30,6 +31,8 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
+    final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
+
     bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(productModel.id);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
 
@@ -41,6 +44,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
+            viewedProdProvider.addProductToHistory(productId: productModel.id);
             Navigator.pushNamed(context, ProductDetails.routeName,
                 arguments: productModel.id);
             /*GlobalMethods.navigateTo(

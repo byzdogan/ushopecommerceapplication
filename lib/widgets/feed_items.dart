@@ -50,7 +50,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(productModel.id);
-    //final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
+    final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -58,7 +58,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            //viewedProdProvider.addProductToHistory(productId: productModel.id);
+            viewedProdProvider.addProductToHistory(productId: productModel.id);
             Navigator.pushNamed(context, ProductDetails.routeName,
                 arguments: productModel.id);
             /*GlobalMethods.navigateTo(

@@ -45,7 +45,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         showSelectedLabels: false, //selected label hide
         showUnselectedLabels: false, //unselected hide
         currentIndex: _selectedIndex,
-        unselectedItemColor: _isDark ? Colors.white10 : Colors.black,
+        unselectedItemColor: _isDark ? Colors.white : Colors.black,
         selectedItemColor: _isDark ? Colors.cyan : Colors.cyan, //left for dartTheme
         onTap: _selectedPage,
         items: <BottomNavigationBarItem>[
