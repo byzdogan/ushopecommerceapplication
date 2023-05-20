@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [SizedBox(
-
             height: size.height * 0.28, //0.33
             child: Swiper(
               itemBuilder: (BuildContext context,int index){
@@ -54,13 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   activeColor: Colors.cyan,),
               ),
-//control: const SwiperControl(color: Colors.blue), //resim kenarlarında ok
+             control: const SwiperControl(color: Colors.cyan), //resim kenarlarında ok
             ),
           ),
-            const SizedBox(
-
-              height: 4, //6
-            ),
+            /*const SizedBox(
+              height: 2, //6
+            ),*/
             TextButton(
               onPressed: () {
                 GlobalMethods.navigateTo(
@@ -71,12 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 textSize: 20,
                 maxLines: 1,
                 color: Colors.cyan,
+                isTitle: true,
               ),
             ),
-            const SizedBox(
-
-              height: 4, //6
-            ),
+            /*const SizedBox(
+              height: 1, //6
+            ),*/
             Row(
               children: [
                 const SizedBox(
@@ -99,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-
                   width: 1,
                 ),
                 Flexible(
@@ -121,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 1,), //10
+            //const SizedBox(height: 1,), //10
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(

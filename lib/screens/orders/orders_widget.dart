@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/orders_model.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/screens/orders/orders_screen.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
 import 'package:ushopecommerceapplication/widgets/text_widget.dart';
@@ -33,13 +34,11 @@ class _OrderWidgetState extends State<OrderWidget> {
     final getCurrentProduct = productProvider.findProdById(ordersModel.productId);
     return ListTile(
       onTap: () {
-        GlobalMethods.navigateTo(
-            ctx: context, routeName: ProductDetails.routeName);
       },
       leading:  FancyShimmerImage(
         height: size.width * 0.27,
         width: size.width * 0.25,//width: size.width * 0.2,
-        imageUrl: ordersModel.imageUrl,
+        imageUrl: getCurrentProduct.imageUrl,//ordersModel.imageUrl,
         boxFit: BoxFit.fill,
       ),
 
@@ -51,7 +50,7 @@ class _OrderWidgetState extends State<OrderWidget> {
 
       subtitle: TextWidget(
         isTitle: false,
-        text: "Paid: ${double.parse(ordersModel.price).toStringAsFixed(2)}₺", //const Text("Paid: 200₺"),
+        text: "Paid: ${double.parse(ordersModel.price).toStringAsFixed(2)}₺", //const Text("Paid: 200₺"), ${double.parse(ordersModel.price).toStringAsFixed(2)}₺ '${getCurrProduct.title}  x${ordersModel.quantity}',
         color: color,
         textSize: 18),
 

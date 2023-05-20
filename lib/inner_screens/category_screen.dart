@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:ushopecommerceapplication/const/contss.dart';
+import 'package:ushopecommerceapplication/inner_screens/feed_screens.dart';
 import 'package:ushopecommerceapplication/models/products_model.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/widgets/back_widget.dart';
 import 'package:ushopecommerceapplication/widgets/empty_products_widget.dart';
 import '../services/utils.dart';
@@ -57,7 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           : SingleChildScrollView(
               child: Column(children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 8.0),
                   child: SizedBox(
                     height: kBottomNavigationBarHeight,
                     child: TextField(
@@ -66,7 +68,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       onChanged: (valuee) {
                         setState(() {
                           listProductSearch = productProviders.searchQuery(valuee);
-
                         });
                       },
                       decoration: InputDecoration(

@@ -58,7 +58,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
       body: SingleChildScrollView(
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 8.0),
             child: SizedBox(
               height: kBottomNavigationBarHeight,
               child: TextField(

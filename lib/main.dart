@@ -115,6 +115,7 @@ class _MyAppState extends State<MyApp> {
                 RegisterScreen.routeName: (ctx) => const RegisterScreen(),
                 ForgetPasswordScreen.routeName: (ctx) => const ForgetPasswordScreen(),
                 CategoryScreen.routeName: (ctx) => const CategoryScreen(),
+                OrdersScreen.routeName: (ctx) => const OrdersScreen(),
                   }
               );
           }

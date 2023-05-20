@@ -31,6 +31,7 @@ class ProductsProvider with ChangeNotifier {
                     isOnSale: element.get("isOnSale"), ));
           });
     }); // tüm ürünleri göstermek istediğimiz için id eklemedik kullanıcada öyle değildi.
+    notifyListeners();
   }
 
   ProductModel findProdById(String productId) {
