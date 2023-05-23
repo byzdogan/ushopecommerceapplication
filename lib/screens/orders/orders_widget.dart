@@ -37,7 +37,7 @@ class _OrderWidgetState extends State<OrderWidget> {
       },
       leading:  FancyShimmerImage(
         height: size.width * 0.27,
-        width: size.width * 0.25,//width: size.width * 0.2,
+        width: size.width * 0.24,//width: size.width * 0.2,
         imageUrl: getCurrentProduct.imageUrl,//ordersModel.imageUrl,
         boxFit: BoxFit.fill,
       ),

@@ -108,11 +108,11 @@ class CartScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async{
                   User? user = authInstance.currentUser;
-                  final orderId = const Uuid().v4();
                   final productProvider = Provider.of<ProductsProvider>(ctx, listen: false);
                   cartProvider.getCartItems.forEach((key, value) async{
                     final getCurrentProduct = productProvider.findProdById(value.productId);
                     try{
+                      final orderId = const Uuid().v4();
                       await FirebaseFirestore.instance
                           .collection("orders")
                           .doc(orderId)
