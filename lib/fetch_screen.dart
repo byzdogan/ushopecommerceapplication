@@ -64,7 +64,7 @@ class _FetchScreenState extends State<FetchScreen> {
         children: [
           Center(
             child: Image.asset(
-              'assets/images/img.png',
+              'assets/images/ushoplogo.png',
               fit: BoxFit.fitWidth,
               height: size.width ,
             ),

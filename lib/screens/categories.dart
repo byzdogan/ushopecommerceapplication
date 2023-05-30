@@ -11,7 +11,6 @@ class CategoriesScreen extends StatelessWidget {
     const Color(0xff808080),
     const Color(0xff808080),
     const Color(0xff0ab2b0),
-
   ];
 
   List<Map<String, dynamic>> catInfo = [
@@ -20,7 +19,7 @@ class CategoriesScreen extends StatelessWidget {
       'catText': 'Clothes',
     },
     {
-      'imgPath': 'assets/images/cat/bag4.png',
+      'imgPath': 'assets/images/cat/accessories.png',
       'catText': 'Accessories',
     },
     {

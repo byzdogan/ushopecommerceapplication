@@ -4,9 +4,9 @@ import 'package:ushopecommerceapplication/models/products_model.dart';
 
 class Constss {
   static final List<String> offerImages = [
-    "assets/images/offers/yirmi.jpeg",
     "assets/images/offers/otuz.jpeg",
-    "assets/images/offers/uufoto3.jpeg",
+    "assets/images/offers/yirmi.jpeg",
+    "assets/images/offers/offers3.png",
   ];
 
   static List<String> authImagePaths = [
