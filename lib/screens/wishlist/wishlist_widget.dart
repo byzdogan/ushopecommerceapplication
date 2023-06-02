@@ -8,6 +8,7 @@ import 'package:ushopecommerceapplication/inner_screens/product_details.dart';
 import 'package:ushopecommerceapplication/models/wishlist_model.dart';
 import 'package:ushopecommerceapplication/providers/cart_provider.dart';
 import 'package:ushopecommerceapplication/providers/products_provider.dart';
+import 'package:ushopecommerceapplication/providers/viewed_provider.dart';
 import 'package:ushopecommerceapplication/providers/wishlist_provider.dart';
 import 'package:ushopecommerceapplication/services/global_methods.dart';
 import 'package:ushopecommerceapplication/services/utils.dart';
@@ -31,12 +32,14 @@ class WishlistWidget extends StatelessWidget {
         : getCurrentProduct.price;
     bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
     bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
+    final viewedProdProvider = Provider.of<ViewedProductProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0) ,
       child: GestureDetector(
         onTap: () {
           //GlobalMethods.navigateTo(ctx: context, routeName: ProductDetails.routeName);
+          viewedProdProvider.addProductToHistory(productId: productId);
           Navigator.pushNamed(context, ProductDetails.routeName,
               arguments: wishlistModel.productId);
         },

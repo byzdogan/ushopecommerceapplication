@@ -28,7 +28,7 @@ class WishlistScreen extends StatelessWidget {
       title: "Your wish list is empty!",
       subtitle: " ",
       buttonText: 'Add a Wish',
-      imagePath: 'assets/images/emptywishlist.png',
+      imagePath: 'assets/images/empty_screens/emptywishlist.png',
     )
         :Scaffold(
           appBar: AppBar(

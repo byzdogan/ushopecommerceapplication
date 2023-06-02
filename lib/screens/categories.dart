@@ -23,7 +23,7 @@ class CategoriesScreen extends StatelessWidget {
       'catText': 'Accessories',
     },
     {
-      'imgPath': 'assets/images/cat/kırtasiye2.png',
+      'imgPath': 'assets/images/cat/stationeries.png',
       'catText': 'Stationeries',
     },
     {

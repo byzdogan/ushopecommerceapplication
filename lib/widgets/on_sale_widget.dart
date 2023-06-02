@@ -52,7 +52,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                 routeName: ProductDetails.routeName);*/
           },
           child: Padding(
-            padding: const EdgeInsets.all(5.0), //8
+            padding: const EdgeInsets.fromLTRB(3.0,6.0,3.0,3.0), //8
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,

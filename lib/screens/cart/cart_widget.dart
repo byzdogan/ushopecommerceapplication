@@ -180,7 +180,7 @@ class _CartWidgetState extends State<CartWidget> {
                                 child: const Icon(
                                   CupertinoIcons.cart_badge_minus,
                                   color: Colors.redAccent,
-                                  size: 26,
+                                  size: 32,
                                 ),
                               ),
                             ],

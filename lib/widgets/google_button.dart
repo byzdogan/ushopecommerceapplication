@@ -28,7 +28,7 @@ class GoogleButton extends StatelessWidget {
             GoogleAuthProvider.credential(
               idToken: googleAuth.idToken,
               accessToken: googleAuth.accessToken,));
-          if(authResult.additionalUserInfo!.isNewUser) { //authResult.additionalUserInfo!.isNewUser
+          if(authResult.additionalUserInfo!.isNewUser) {
             await FirebaseFirestore.instance
                 .collection('users')
                 .doc(authResult.user!.uid)
@@ -73,7 +73,7 @@ class GoogleButton extends StatelessWidget {
           Container(
             color: Colors.white,
             child: Image.asset(
-              'assets/images/google1.png',
+              'assets/images/auth_photos/google1.png',
               width: 40.0,
             ),
           ),

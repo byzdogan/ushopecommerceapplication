@@ -10,9 +10,9 @@ class Constss {
   ];
 
   static List<String> authImagePaths = [
-    "assets/images/us.jpg",
-    "assets/images/us1.jpeg",
-    "assets/images/us2.jpeg",
+    "assets/images/auth_photos/us.jpg",
+    "assets/images/auth_photos/us1.jpeg",
+    "assets/images/auth_photos/us2.jpeg",
   ];
 
 

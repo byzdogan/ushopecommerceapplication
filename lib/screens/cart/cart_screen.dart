@@ -30,9 +30,9 @@ class CartScreen extends StatelessWidget {
     return cartItemsList.isEmpty
         ? const EmptyCartScreen(
             title: 'Your cart is empty!',
-            subtitle: 'Add something and make me happy :)',
+            subtitle: 'Add something and make your cart happy :)',
             buttonText: 'Shop now',
-            imagePath: 'assets/images/emptycart2.png',
+            imagePath: 'assets/images/empty_screens/emptycart2.png',
           )
         : Scaffold(
             appBar: AppBar(

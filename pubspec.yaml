@@ -79,6 +79,8 @@ flutter:
      - assets/images/
      - assets/images/cat/
      - assets/images/offers/
+     - assets/images/auth_photos/
+     - assets/images/empty_screens/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -33,7 +33,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             title: 'You have not ordered anything yet!',
             subtitle: " ",
             buttonText: 'Shop now',
-            imagePath: 'assets/images/emptyorder1.png',
+            imagePath: 'assets/images/empty_screens/emptyorder1.png',
           )
               : Scaffold(
               appBar: AppBar(
