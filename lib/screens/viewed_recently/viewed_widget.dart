@@ -43,6 +43,8 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
         onTap: () {
           //GlobalMethods.navigateTo(
           //    ctx: context, routeName: ProductDetails.routeName);
+          Navigator.pushNamed(context, ProductDetails.routeName,
+              arguments: viewedProductModel.productId);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

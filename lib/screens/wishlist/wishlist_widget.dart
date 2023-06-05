@@ -39,7 +39,7 @@ class WishlistWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           //GlobalMethods.navigateTo(ctx: context, routeName: ProductDetails.routeName);
-          viewedProdProvider.addProductToHistory(productId: productId);
+          viewedProdProvider.addProductToHistory(productId: getCurrentProduct.id);
           Navigator.pushNamed(context, ProductDetails.routeName,
               arguments: wishlistModel.productId);
         },
